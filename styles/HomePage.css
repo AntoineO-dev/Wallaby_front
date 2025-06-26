@@ -1,0 +1,337 @@
+/* Reset et styles globaux */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  background-color: #f5f2ed;
+  color: #333;
+}
+
+.homepage {
+  width: 210vh;
+  min-height: 100vh;
+}
+
+/* Section Hero */
+.hero-section {
+  position: relative;
+  width: 100%;
+  height: 60vh;
+  min-height: 400px;
+  overflow: hidden;
+}
+
+.hero-image-placeholder {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, #8b7355 0%, #a0885c 100%);
+  z-index: 1;
+}
+
+.hero-content {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  z-index: 2;
+  color: white;
+}
+
+.hero-content h1 {
+  font-family: 'Times New Roman', serif;
+  font-size: clamp(2.5rem, 6vw, 4rem);
+  font-weight: 300;
+  margin-bottom: 0.5rem;
+  text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+}
+
+.hero-content h2 {
+  font-family: 'Times New Roman', serif;
+  font-size: clamp(2rem, 5vw, 3.5rem);
+  font-weight: 300;
+  text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+}
+
+/* Section Nature et bien-être */
+.nature-section {
+  width: 100%;
+  background-color: #f5f2ed;
+  padding: 4rem 0;
+}
+
+.section-title {
+  font-family: 'Times New Roman', serif;
+  font-size: clamp(1.8rem, 4vw, 2.5rem);
+  font-weight: 300;
+  color: #666;
+  margin-bottom: 3rem;
+}
+
+/* Images d'illustration nature */
+.nature-image-placeholder {
+  width: 100%;
+  height: 300px;
+  background-color: #d4c4a8;
+  border-radius: 8px;
+  margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.3s ease;
+}
+
+.nature-image-placeholder:hover {
+  transform: scale(1.02);
+}
+
+.nature-image-placeholder::after {
+  content: "🌿";
+  font-size: 2rem;
+  color: #8b7355;
+  opacity: 0.6;
+}
+
+/* Cartes des chambres */
+.room-card {
+  background-color: white;
+  border: 1px solid #e0ddd6;
+  border-radius: 8px;
+  padding: 1rem; /* Padding uniforme sur tous les côtés */
+  text-align: center;
+  height: auto; 
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.room-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+}
+
+.room-card h3 {
+  font-family: 'Times New Roman', serif;
+  font-size: 1.4rem;
+  font-weight: 400;
+  color: #8b7355;
+  margin-bottom: 1rem;
+  min-height: 1rem; /* Hauteur réduite pour les titres */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.room-card p {
+  color: #666;
+  margin-bottom: 0rem; /* Espace réduit après la description */
+  font-size: 0.9rem;
+  display: block;
+  text-align: center;
+}
+
+.btn-voir-chambres {
+  background: transparent;
+  border: 1px solid #8b7355;
+  color: #8b7355;
+  padding: 0.6rem  1.2rem;
+  margin-top: 3rem;
+  margin-bottom: 0rem; /* Espace équivalent en bas pour centrer */
+  border-radius: 4px;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  align-self: center;
+ 
+}
+
+.btn-voir-chambres:hover {
+  background-color: #8b7355;
+  color: white;
+}
+
+/* Section About */
+.about-section {
+  width: 100%;
+  background-color: #f5f2ed;
+  padding: 4rem 0;
+}
+
+.logo-placeholder {
+  width: 120px;
+  height: 120px;
+  background-color: #d4c4a8;
+  border-radius: 50%;
+  margin-bottom: 1.5rem;
+}
+
+.about-content h3 {
+  font-family: 'Times New Roman', serif;
+  font-size: 1.8rem;
+  font-weight: 400;
+  color: #8b7355;
+  margin-bottom: 1rem;
+  text-align: center;
+}
+
+.about-content p {
+  color: #666;
+  line-height: 1.6;
+  text-align: center;
+  font-size: 1rem;
+}
+
+/* Footer */
+.footer-section {
+  width: 100%;
+  background-color: #e8e3d6;
+  padding: 2rem 0;
+}
+
+.footer-nav {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+}
+
+.footer-link {
+  color: #8b7355;
+  text-decoration: none;
+  font-size: 0.9rem;
+  transition: color 0.3s ease;
+}
+
+.footer-link:hover {
+  color: #666;
+}
+
+/* Styles pour les informations supplémentaires des chambres */
+.room-price {
+  color: #8b7355;
+  font-weight: bold;
+  font-size: 1.1rem;
+  margin: 0.5rem 0;
+}
+
+.room-capacity {
+  color: #666;
+  font-size: 0.9rem;
+  font-style: italic;
+  margin: 0.5rem 0;
+}
+
+/* Media Queries pour responsivité */
+@media (max-width: 768px) {
+  .hero-section {
+    height: 50vh;
+    min-height: 350px;
+  }
+  
+  .nature-section {
+    padding: 2rem 0;
+  }
+  
+  .section-title {
+    margin-bottom: 2rem;
+  }
+  
+  .room-card {
+    padding: 1.5rem;
+    margin-bottom: 1rem;
+  }
+  
+  .about-section {
+    padding: 2rem 0;
+  }
+  
+  .about-content h3 {
+    font-size: 1.5rem;
+  }
+  
+  .footer-nav {
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+  }
+  
+  .nature-image-placeholder {
+    height: 200px;
+  }
+}
+
+@media (max-width: 576px) {
+  .room-card {
+    padding: 1rem;
+  }
+  
+  .nature-image-placeholder {
+    height: 160px;
+  }
+  
+  .logo-placeholder {
+    width: 100px;
+    height: 100px;
+  }
+}
+
+/* Container fluid personnalisé pour assurer 100% de largeur */
+.container-fluid {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding-left: 2rem;
+  padding-right: 2rem;
+}
+
+@media (max-width: 768px) {
+  .container-fluid {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+}
+
+/* Alignement des colonnes pour les cartes avec images */
+.nature-section .row > [class*="col-"] {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 2rem;
+}
+
+/* Assurer que l'image et la carte restent dans la même colonne */
+.nature-section .col-xl-3,
+.nature-section .col-lg-4,
+.nature-section .col-md-6,
+.nature-section .col-sm-12 {
+  display: flex;
+  flex-direction: column;
+}
+
+/* Media query pour s'assurer du bon affichage sur grands écrans */
+@media (min-width: 1200px) {
+  .room-card {
+    min-height: auto;
+  }
+}
+
+/* Sur tablettes, 2 cartes par rangée */
+@media (max-width: 991px) and (min-width: 768px) {
+  .room-card {
+    min-height: auto;
+  }
+}
+
+/* Sur mobile, 1 carte par rangée */
+@media (max-width: 767px) {
+  .room-card {
+    min-height: auto;
+  }
+}
