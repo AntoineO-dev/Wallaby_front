@@ -39,6 +39,8 @@ const HomePage = () => {
   };
   return (
     <div className="homepage">
+     
+      
       {/* Section Hero avec image de fond */}
       <section className="hero-section">
         <div className="hero-image-placeholder"></div>
@@ -84,17 +86,11 @@ const HomePage = () => {
                   {/* Image d'illustration au-dessus de chaque carte */}
                   <div className="nature-image-placeholder"></div>
                   
-                  {/* Carte de la chambre */}
-                  <div className="room-card h-100">
-                    <h3>{room.room_name}</h3>
-                    <p>{room.description}</p>
-                    <button 
-                      className="btn-voir-chambres"
-                      onClick={() => handleViewRooms(room.id_room, room.room_name)}
-                    >
-                      Voir chambres →
-                    </button>
-                  </div>
+                  {/* Utilisation du composant RoomCard */}
+                  <RoomCard 
+                    room={room}
+                    onViewRooms={() => handleViewRooms(room.id_room, room.room_name)}
+                  />
                 </div>
               ))
             ) : (
