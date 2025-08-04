@@ -1,51 +1,44 @@
-import axios from "axios";
-const API_URL = import.meta.env.VITE_API_URL;
+import apiClient from './apiClient.js';
 
-
+// Fonctions pour récupérer les chambres
 function getRooms() {
-  return axios.get(API_URL + "rooms");
+  return apiClient.get('rooms');
 }
-
 
 function getAvailableRooms() {
-  return axios.get(API_URL + "rooms/available");
+  return apiClient.get('rooms/available');
 }
 
-
 function getRoomsAbovePrice(price_per_night) {
-  return axios.get(API_URL + "rooms/pricesAbove/" + price_per_night);
+  return apiClient.get('rooms/pricesAbove/' + price_per_night);
 }
 
 function getRoomsBelowPrice(price_per_night) {
-  return axios.get(API_URL + "rooms/pricesBelow/" + price_per_night);
+  return apiClient.get('rooms/pricesBelow/' + price_per_night);
 }
 
-
 function getRoomByName(room_name) {
-  return axios.get(API_URL + "rooms/name/" + room_name);
+  return apiClient.get('rooms/name/' + room_name);
 }
 
 function getRoomsByCapacity(capacity) {
-  return axios.get(API_URL + "rooms/capacity/" + capacity);
+  return apiClient.get('rooms/capacity/' + capacity);
 }
-
 
 function getRoomById(id) {
-  return axios.get(API_URL + "rooms/" + id);
+  return apiClient.get('rooms/' + id);
 }
-
 
 function createRoom(room) {
-  return axios.post(API_URL + "rooms", room);
+  return apiClient.post('rooms', room);
 }
 
-
 function updateRoom(room) {
-  return axios.patch(API_URL + "rooms/" + room.id_room, room);
+  return apiClient.patch('rooms/' + room.id_room, room);
 }
 
 function deleteRoom(id) {
-  return axios.delete(API_URL + "rooms/" + id);
+  return apiClient.delete('rooms/' + id);
 }
 
 export default { 
