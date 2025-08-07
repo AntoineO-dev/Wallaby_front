@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import '../../styles/HomePage.css';
 import RoomCard from '../components/roomCard';
 import roomsService from '../services/roomsService';
+import logo from '../assets/logoV2wallaby.png';
 
 const HomePage = () => {
   // État pour stocker les données des chambres
@@ -14,11 +15,11 @@ const HomePage = () => {
     try {
       setLoading(true);
       setError(null);
-      
+
       // Appel à l'API avec Axios
       const response = await roomsService.getRooms();
       setRooms(response.data);
-      
+
     } catch (err) {
       setError(`Erreur lors de la récupération des chambres: ${err.message}`);
       console.error('Erreur lors de la récupération des chambres:', err);
@@ -35,12 +36,12 @@ const HomePage = () => {
   // Fonction pour gérer le clic sur "Voir chambres"
   const handleViewRooms = (roomId, roomTitle) => {
     console.log(`Voir chambres ${roomTitle} (ID: ${roomId})`);
-   
+
   };
   return (
     <div className="homepage">
-     
-      
+
+
       {/* Section Hero avec image de fond */}
       <section className="hero-section">
         <div className="hero-image-placeholder"></div>
@@ -54,7 +55,7 @@ const HomePage = () => {
       <section className="nature-section">
         <div className="container-fluid">
           <h2 className="section-title text-center">Nature et bien-être</h2>
-          
+
           {/* Cartes des chambres avec images d'illustration au-dessus */}
           <div className="row g-4 justify-content-center">
             {loading ? (
@@ -71,8 +72,8 @@ const HomePage = () => {
                 <div className="alert alert-danger" role="alert">
                   <h4>Erreur de chargement</h4>
                   <p>{error}</p>
-                  <button 
-                    className="btn btn-outline-primary" 
+                  <button
+                    className="btn btn-outline-primary"
                     onClick={fetchRooms}
                   >
                     Réessayer
@@ -80,14 +81,11 @@ const HomePage = () => {
                 </div>
               </div>
             ) : rooms.length > 0 ? (
-              // Affichage des chambres avec images au-dessus
+              // Affichage des chambres
               rooms.map((room) => (
                 <div className="col-xl-3 col-lg-3 col-md-6 col-sm-12 mb-4" key={room.id_room}>
-                  {/* Image d'illustration au-dessus de chaque carte */}
-                  <div className="nature-image-placeholder"></div>
-                  
-                  {/* Utilisation du composant RoomCard */}
-                  <RoomCard 
+                  {/* Utilisation du composant RoomCard avec image intégrée */}
+                  <RoomCard
                     room={room}
                     onViewRooms={() => handleViewRooms(room.id_room, room.room_name)}
                   />
@@ -108,12 +106,18 @@ const HomePage = () => {
         <div className="container-fluid">
           <div className="row align-items-center justify-content-center g-4">
             <div className="col-md-auto text-center">
-              <div className="logo-placeholder mx-auto"></div>
+              <div className="logo-placeholder mx-auto">
+                <img 
+                  src={logo} 
+                  alt="Wallaby AirBnB" 
+                  className="about-logo"
+                />
+              </div>
             </div>
             <div className="col-md-6">
               <div className="about-content">
-                <h3>MUTIC DUDONT</h3>
-                <p>Aenean est elit, egestas eu sem, euismod quis, tristique augue, radiatores.</p>
+                <h3>ÉVASION NATURELLE</h3>
+                <p>Vivez une expérience unique dans nos hébergements. Entre calme et nature, redécouvrez le plaisir des vacances authentiques loin de l'agitation urbaine.</p>
               </div>
             </div>
           </div>

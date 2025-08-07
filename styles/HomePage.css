@@ -136,7 +136,7 @@ body {
   background-color: white;
   border: 1px solid #e0ddd6;
   border-radius: 8px;
-  padding: 1rem; /* Padding uniforme sur tous les côtés */
+  overflow: hidden; /* Pour que l'image respecte le border-radius */
   text-align: center;
   height: auto; 
   display: flex;
@@ -147,6 +147,45 @@ body {
 .room-card:hover {
   transform: translateY(-5px);
   box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+}
+
+/* Container pour l'image de la chambre */
+.room-image-container {
+  position: relative;
+  width: 100%;
+  height: 200px;
+  overflow: hidden;
+}
+
+.room-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.room-image:hover {
+  transform: scale(1.05);
+}
+
+/* Placeholder si l'image ne charge pas */
+.room-image-placeholder {
+  width: 100%;
+  height: 100%;
+  background-color: #f0f0f0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 3rem;
+  color: #ccc;
+}
+
+/* Contenu textuel de la carte */
+.room-content {
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
 }
 
 .room-card h3 {
@@ -202,6 +241,21 @@ body {
   background-color: #d4c4a8;
   border-radius: 50%;
   margin-bottom: 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.about-logo {
+  width: 80px;
+  height: auto;
+  object-fit: contain;
+  transition: transform 0.3s ease;
+}
+
+.about-logo:hover {
+  transform: scale(1.1);
 }
 
 .about-content h3 {
