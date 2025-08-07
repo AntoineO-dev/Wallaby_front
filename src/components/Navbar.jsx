@@ -18,6 +18,7 @@ const Navbar = () => {
     confirmPassword: ''
   });
   const [authError, setAuthError] = useState('');
+  const [authSuccess, setAuthSuccess] = useState('');
   const [authLoading, setAuthLoading] = useState(false);
 
   // Vérifier si l'utilisateur est connecté
@@ -46,6 +47,7 @@ const Navbar = () => {
   const handleAuthModalToggle = () => {
     setShowAuthModal(!showAuthModal);
     setAuthError('');
+    setAuthSuccess('');
     setAuthForm({
       email: '',
       password: '',
@@ -58,6 +60,7 @@ const Navbar = () => {
   const switchAuthMode = () => {
     setIsLogin(!isLogin);
     setAuthError('');
+    setAuthSuccess('');
   };
 
   const handleAuthInputChange = (e) => {
@@ -70,6 +73,7 @@ const Navbar = () => {
   const handleAuthSubmit = async (e) => {
     e.preventDefault();
     setAuthError('');
+    setAuthSuccess('');
     setAuthLoading(true);
 
     try {
@@ -79,6 +83,7 @@ const Navbar = () => {
         authService.saveToken(response.data.token);
         authService.saveUser(response.data.user);
         setUser(response.data.user);
+        handleAuthModalToggle(); // Fermer la modal
       } else {
         // Inscription
         if (authForm.password !== authForm.confirmPassword) {
@@ -99,19 +104,28 @@ const Navbar = () => {
           password: authForm.password
         };
         
-        const response = await authService.register(userData);
-        authService.saveToken(response.data.token);
-        authService.saveUser(response.data.user);
-        setUser(response.data.user);
+        // Inscription réussie - NE PAS connecter automatiquement
+        await authService.register(userData);
+        
+        // Afficher message de succès et passer en mode connexion
+        setAuthSuccess('Inscription réussie ! Vous pouvez maintenant vous connecter.');
+        setIsLogin(true); // Passer en mode connexion
+        
+        // Réinitialiser le formulaire mais garder l'email
+        setAuthForm({
+          email: authForm.email, // Garder l'email pour faciliter la connexion
+          password: '',
+          firstName: '',
+          lastName: '',
+          confirmPassword: ''
+        });
       }
-      
-      handleAuthModalToggle(); // Fermer la modal
       
     } catch (err) {
       if (isLogin) {
         setAuthError('Email ou mot de passe incorrect');
       } else {
-        setAuthError('Erreur lors de la création du compte');
+        setAuthError('Erreur lors de la création du compte. Cet email est peut-être déjà utilisé.');
       }
       console.error('Erreur d\'authentification:', err);
     } finally {
@@ -182,7 +196,7 @@ const Navbar = () => {
               {user ? (
                 // Si l'utilisateur est connecté
                 <div className="user-menu">
-                  <span className="user-name">Bonjour, {user.firstName}</span>
+                  <span className="user-name">Bonjour {user.firstName},</span>
                   <button 
                     className="auth-button logout-btn"
                     onClick={handleLogout}
@@ -228,6 +242,7 @@ const Navbar = () => {
             </div>
             <div className="auth-modal-body">
               {authError && <div className="auth-error">{authError}</div>}
+              {authSuccess && <div className="auth-success">{authSuccess}</div>}
               
               <form onSubmit={handleAuthSubmit}>
                 {!isLogin && (
