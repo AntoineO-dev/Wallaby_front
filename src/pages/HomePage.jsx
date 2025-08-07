@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import '../../styles/HomePage.css';
 import RoomCard from '../components/roomCard';
 import roomsService from '../services/roomsService';
+import monchy from '../assets/monchy.jpg';
 import logo from '../assets/logoV2wallaby.png';
 
 const HomePage = () => {
@@ -16,7 +17,7 @@ const HomePage = () => {
       setLoading(true);
       setError(null);
 
-      // Appel à l'API avec Axios
+     
       const response = await roomsService.getRooms();
       setRooms(response.data);
 
@@ -44,7 +45,7 @@ const HomePage = () => {
 
       {/* Section Hero avec image de fond */}
       <section className="hero-section">
-        <div className="hero-image-placeholder"></div>
+        <div className="hero-image-background" style={{backgroundImage: `url(${monchy})`}}></div>
         <div className="hero-content">
           <h1>La Cachette</h1>
           <h2>Sautillante</h2>
@@ -117,7 +118,7 @@ const HomePage = () => {
             <div className="col-md-6">
               <div className="about-content">
                 <h3>ÉVASION NATURELLE</h3>
-                <p>Vivez une expérience unique dans nos hébergements. Entre calme et nature, redécouvrez le plaisir des vacances authentiques loin de l'agitation urbaine.</p>
+                <p>Vivez une expérience unique dans nos hébergements. Entre calme et nature, redécouvrez le plaisir des séjours authentiques loin de l'agitation urbaine.</p>
               </div>
             </div>
           </div>
