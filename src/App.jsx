@@ -3,6 +3,7 @@ import Navbar from "./components/Navbar";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '../styles/HomePage.css'; // Import du CSS global
 import HomePage from "./pages/HomePage";
+import NidWallabyPage from "./pages/NidWallabyPage";
 
 const App = () => {
   return (
@@ -12,6 +13,7 @@ const App = () => {
             <Navbar />
         <Routes>
           <Route path="/" element={<HomePage />} />
+          <Route path="/chambre/nid-wallaby" element={<NidWallabyPage />} />
           {/* Redirections pour les anciennes routes */}
           <Route path="/login" element={<Navigate to="/" replace />} />
           <Route path="/register" element={<Navigate to="/" replace />} />

@@ -1,0 +1,342 @@
+/* Page Nid du Wallaby Styles */
+.nid-wallaby-page {
+  width: 100%;
+  min-height: 100vh;
+  background-color: #f5f2ed;
+}
+
+/* En-tête de la chambre */
+.room-header {
+  background: linear-gradient(135deg, #8b7355 0%, #6d5940 100%);
+  color: white;
+  padding: 4rem 0 2rem;
+  text-align: center;
+}
+
+.room-title {
+  font-family: 'Times New Roman', serif;
+  font-size: clamp(2.5rem, 5vw, 3.5rem);
+  font-weight: 300;
+  margin-bottom: 1rem;
+  text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+}
+
+.room-subtitle {
+  font-size: 1.2rem;
+  opacity: 0.9;
+  margin-bottom: 0;
+}
+
+/* Section Gallery */
+.room-gallery {
+  padding: 4rem 0;
+  background-color: white;
+}
+
+/* Description de la chambre */
+.room-description {
+  padding: 4rem 0;
+  background-color: #f5f2ed;
+}
+
+.description-content h2 {
+  color: #8b7355;
+  font-size: 2.2rem;
+  margin-bottom: 2rem;
+  text-align: center;
+  font-weight: 300;
+}
+
+.description-content p {
+  font-size: 1.1rem;
+  line-height: 1.8;
+  color: #555;
+  margin-bottom: 1.5rem;
+  text-align: justify;
+}
+
+/* Équipements de la chambre */
+.room-features {
+  margin-top: 3rem;
+  padding: 2rem;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+}
+
+.room-features h3 {
+  color: #8b7355;
+  font-size: 1.8rem;
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+.features-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+}
+
+.feature-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem;
+  border-radius: 8px;
+  transition: background-color 0.3s ease;
+}
+
+.feature-item:hover {
+  background-color: rgba(139, 115, 85, 0.1);
+}
+
+.feature-icon {
+  font-size: 1.5rem;
+}
+
+/* Services inclus */
+.room-services {
+  padding: 4rem 0;
+  background-color: white;
+}
+
+.section-title {
+  color: #8b7355;
+  font-size: 2.5rem;
+  margin-bottom: 3rem;
+  font-weight: 300;
+}
+
+.service-card {
+  background: #f5f2ed;
+  padding: 2rem;
+  border-radius: 12px;
+  text-align: center;
+  height: 100%;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  border: 1px solid rgba(139, 115, 85, 0.1);
+}
+
+.service-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+}
+
+.service-icon {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+  display: block;
+}
+
+.service-card h4 {
+  color: #8b7355;
+  font-size: 1.4rem;
+  margin-bottom: 1rem;
+  font-weight: 500;
+}
+
+.service-card p {
+  color: #666;
+  line-height: 1.6;
+  font-size: 0.95rem;
+}
+
+/* Attractions à proximité */
+.nearby-attractions {
+  padding: 4rem 0;
+  background: linear-gradient(135deg, #f5f2ed 0%, #ede8e0 100%);
+}
+
+.attraction-card {
+  background: white;
+  padding: 1.5rem;
+  border-radius: 12px;
+  border-left: 4px solid #8b7355;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+  height: 100%;
+  transition: transform 0.3s ease;
+}
+
+.attraction-card:hover {
+  transform: translateX(5px);
+}
+
+.attraction-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.5rem;
+}
+
+.attraction-info h4 {
+  color: #8b7355;
+  font-size: 1.3rem;
+  margin: 0;
+  font-weight: 500;
+}
+
+.distance {
+  background: #8b7355;
+  color: white;
+  padding: 0.25rem 0.75rem;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  font-weight: 500;
+}
+
+.attraction-card p {
+  color: #666;
+  line-height: 1.6;
+  margin: 0;
+}
+
+/* Informations pratiques */
+.practical-info {
+  padding: 4rem 0;
+  background-color: white;
+}
+
+.info-content h2 {
+  color: #8b7355;
+  font-size: 2.2rem;
+  margin-bottom: 2rem;
+  text-align: center;
+  font-weight: 300;
+}
+
+.info-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 2rem;
+  margin-bottom: 3rem;
+}
+
+.info-item {
+  text-align: center;
+  padding: 1.5rem;
+  background: #f5f2ed;
+  border-radius: 12px;
+  border: 1px solid rgba(139, 115, 85, 0.1);
+}
+
+.info-item h4 {
+  color: #8b7355;
+  font-size: 1.2rem;
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+}
+
+.info-item p {
+  color: #666;
+  margin: 0;
+  font-size: 1rem;
+}
+
+/* Section réservation */
+.booking-section {
+  text-align: center;
+  padding: 2rem;
+  background: linear-gradient(135deg, #8b7355 0%, #6d5940 100%);
+  border-radius: 12px;
+  color: white;
+  margin-top: 2rem;
+}
+
+.booking-section h3 {
+  font-size: 1.8rem;
+  margin-bottom: 1rem;
+  font-weight: 300;
+}
+
+.booking-section p {
+  margin-bottom: 2rem;
+  opacity: 0.9;
+}
+
+.booking-btn {
+  background: white;
+  color: #8b7355;
+  border: none;
+  padding: 1rem 2rem;
+  border-radius: 8px;
+  font-size: 1.1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.booking-btn:hover {
+  background: #f5f2ed;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 16px rgba(0,0,0,0.2);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .room-header {
+    padding: 2rem 0 1rem;
+  }
+  
+  .room-title {
+    font-size: 2rem;
+  }
+  
+  .room-subtitle {
+    font-size: 1rem;
+  }
+  
+  .room-gallery,
+  .room-description,
+  .room-services,
+  .nearby-attractions,
+  .practical-info {
+    padding: 2rem 0;
+  }
+  
+  .section-title {
+    font-size: 2rem;
+  }
+  
+  .description-content h2 {
+    font-size: 1.8rem;
+  }
+  
+  .service-card {
+    padding: 1.5rem;
+  }
+  
+  .attraction-info {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+  
+  .info-grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+  
+  .features-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 480px) {
+  .room-header {
+    padding: 1.5rem 0;
+  }
+  
+  .container-fluid {
+    padding: 0 1rem;
+  }
+  
+  .service-card,
+  .attraction-card,
+  .info-item {
+    padding: 1rem;
+  }
+  
+  .booking-section {
+    padding: 1.5rem;
+  }
+}

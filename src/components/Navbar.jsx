@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import roomsService from '../services/roomsService';
 import authService from '../services/authService';
 import logo from '../assets/logoV2wallaby.png';
 import '../../styles/Navbar.css';
 
 const Navbar = () => {
+  const navigate = useNavigate();
   const [rooms, setRooms] = useState([]);
   const [showDropdown, setShowDropdown] = useState(false);
   const [showAuthModal, setShowAuthModal] = useState(false);
@@ -42,6 +44,20 @@ const Navbar = () => {
 
   const handleDropdownToggle = () => {
     setShowDropdown(!showDropdown);
+  };
+
+  const handleRoomNavigation = (roomName) => {
+    setShowDropdown(false);
+    
+    // Navigation spécifique pour "Le Nid du Wallaby"
+    if (roomName === "Le Nid du Wallaby") {
+      navigate('/chambre/nid-wallaby');
+    } else {
+      // Pour les autres chambres, on peut créer une route générique
+      // ou rediriger vers la homepage avec une ancre
+      console.log(`Navigation vers ${roomName} - Route à définir`);
+      navigate('/');
+    }
   };
 
   const handleAuthModalToggle = () => {
@@ -145,13 +161,13 @@ const Navbar = () => {
           <div className="navbar-content">
             {/* Logo à gauche */}
             <div className="navbar-logo">
-              <div className="logo-container">
+              <Link to="/" className="logo-container">
                 <img 
                   src={logo}
                   alt="La Cachette Sautillante" 
                   className="logo-image"
                 />
-              </div>
+              </Link>
             </div>
 
             {/* Menu navigation au centre */}
@@ -167,14 +183,13 @@ const Navbar = () => {
                 {showDropdown && (
                   <div className="dropdown-menu show">
                     {rooms.map((room) => (
-                      <a 
+                      <button 
                         key={room.id_room}
-                        href="#" 
                         className="dropdown-item"
-                        onClick={() => setShowDropdown(false)}
+                        onClick={() => handleRoomNavigation(room.room_name)}
                       >
                         {room.room_name}
-                      </a>
+                      </button>
                     ))}
                   </div>
                 )}
