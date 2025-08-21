@@ -54,6 +54,8 @@ const Navbar = () => {
       navigate('/chambre/nid-wallaby');
     } else if (roomName === "La Prairie Sautillante") {
       navigate('/chambre/prairie-sautillante');
+    } else if (roomName === "L'Oasis des Marsupiaux") {
+      navigate('/chambre/oasis-marsupiaux');
     } else {
       // Pour les autres chambres, on peut créer une route générique
       // ou rediriger vers la homepage avec une ancre

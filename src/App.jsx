@@ -5,6 +5,7 @@ import '../styles/HomePage.css'; // Import du CSS global
 import HomePage from "./pages/HomePage";
 import NidWallabyPage from "./pages/NidWallabyPage";
 import PrairieSautillantePage from "./pages/PrairieSautillantePage";
+import OasisMarsupiauxPage from "./pages/OasisMarsupiauxPage";
 
 const App = () => {
   return (
@@ -16,6 +17,7 @@ const App = () => {
           <Route path="/" element={<HomePage />} />
           <Route path="/chambre/nid-wallaby" element={<NidWallabyPage />} />
           <Route path="/chambre/prairie-sautillante" element={<PrairieSautillantePage />} />
+          <Route path="/chambre/oasis-marsupiaux" element={<OasisMarsupiauxPage />} />
           {/* Redirections pour les anciennes routes */}
           <Route path="/login" element={<Navigate to="/" replace />} />
           <Route path="/register" element={<Navigate to="/" replace />} />
