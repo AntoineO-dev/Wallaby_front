@@ -13,22 +13,22 @@ const NidWallabyPage = () => {
 
   const services = [
     {
-      icon: '🍳',
+      image: null, // Espace réservé pour l'image du petit déjeuner
       title: 'Petit déjeuner',
       description: 'Petit déjeuner continental servi de 7h à 10h avec produits locaux et bio'
     },
     {
-      icon: '🎯',
+      image: null, // Espace réservé pour l'image de la pétanque
       title: 'Pétanque',
       description: 'Terrain de pétanque privatif avec boules fournies pour des moments conviviaux'
     },
     {
-      icon: '🧖‍♀️',
+      image: null, // Espace réservé pour l'image du sauna
       title: 'Sauna',
       description: 'Sauna finlandais traditionnel pour une détente absolue après vos activités'
     },
     {
-      icon: '🛁',
+      image: null, // Espace réservé pour l'image du bain nordique
       title: 'Bain nordique',
       description: 'Bain nordique chauffé au feu de bois avec vue sur la nature environnante'
     }
@@ -149,7 +149,19 @@ const NidWallabyPage = () => {
             {services.map((service, index) => (
               <div key={index} className="col-lg-3 col-md-6">
                 <div className="service-card">
-                  <div className="service-icon">{service.icon}</div>
+                  <div className="service-image-placeholder">
+                    {service.image ? (
+                      <img 
+                        src={service.image} 
+                        alt={service.title}
+                        className="service-image"
+                      />
+                    ) : (
+                      <div className="service-image-empty">
+                        <span>Image à venir</span>
+                      </div>
+                    )}
+                  </div>
                   <h4>{service.title}</h4>
                   <p>{service.description}</p>
                 </div>

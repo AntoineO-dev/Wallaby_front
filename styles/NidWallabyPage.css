@@ -122,10 +122,54 @@
   box-shadow: 0 8px 24px rgba(0,0,0,0.1);
 }
 
-.service-icon {
-  font-size: 3rem;
-  margin-bottom: 1rem;
-  display: block;
+/* Conteneur pour l'image du service */
+.service-image-placeholder {
+  width: 80px;
+  height: 80px;
+  margin: 0 auto 1rem;
+  border-radius: 12px;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Style pour l'image du service */
+.service-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 12px;
+}
+
+/* Style pour l'espace réservé quand il n'y a pas d'image */
+.service-image-empty {
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, #e0ddd6 0%, #d0ccc3 100%);
+  border: 2px dashed #8b7355;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+}
+
+.service-image-empty span {
+  color: #8b7355;
+  font-size: 0.75rem;
+  font-weight: 500;
+  text-align: center;
+  opacity: 0.7;
+}
+
+.service-card:hover .service-image-empty {
+  background: linear-gradient(135deg, #d0ccc3 0%, #c0bcb3 100%);
+  border-color: #6d5940;
+}
+
+.service-card:hover .service-image-empty span {
+  opacity: 1;
 }
 
 .service-card h4 {
