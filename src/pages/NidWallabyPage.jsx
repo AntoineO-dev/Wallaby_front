@@ -317,6 +317,20 @@ const NidWallabyPage = () => {
           </div>
         </div>
       </section>
+
+      {/* Footer */}
+      <footer className="footer-section">
+        <div className="container-fluid">
+          <nav className="footer-nav">
+            <a href="#" className="footer-link">Avis</a>
+            <a href="#" className="footer-link">Fiabilité</a>
+            <a href="#" className="footer-link">Accueil &gt;</a>
+            <a href="#" className="footer-link">Hôtes</a>
+            <a href="#" className="footer-link">A propos</a>
+            <a href="#" className="footer-link">Mentions légales</a>
+          </nav>
+        </div>
+      </footer>
     </div>
   );
 };
