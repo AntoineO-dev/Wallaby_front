@@ -1,9 +1,13 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import Carousel from '../components/Carousel';
 import roomsService from '../services/roomsService';
 import '../../styles/NidWallabyPage.css';
 
 const NidWallabyPage = () => {
+  // Hook pour la navigation
+  const navigate = useNavigate();
+  
   // États pour gérer les données de la chambre
   const [roomData, setRoomData] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -307,9 +311,8 @@ const NidWallabyPage = () => {
                 
                 <div className="booking-section">
                   <h3>Réservez votre séjour</h3>
-                  <p>Contactez-nous pour vérifier les disponibilités et effectuer votre réservation.</p>
-                  <button className="booking-btn">
-                    Vérifier les disponibilités
+                  <button className="booking-btn" onClick={() => navigate('/reservation')}>
+                    Réserver
                   </button>
                 </div>
               </div>
