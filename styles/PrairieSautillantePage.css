@@ -1,13 +1,13 @@
 /* Styles spécifiques pour La Prairie Sautillante */
 .prairie-sautillante-page {
   min-height: 100vh;
-  background: linear-gradient(135deg, #e8f5e8 0%, #f0f8f0 100%);
+  background-color: #f5f2ed;
 }
 
 /* En-tête de la chambre */
 .room-header {
   padding: 100px 0 60px;
-  background: linear-gradient(135deg, #2d5a3d 0%, #4a7c5a 100%);
+  background: linear-gradient(135deg, #8b7355 0%, #6d5940 100%);
   color: white;
   text-align: center;
   position: relative;
@@ -56,19 +56,19 @@
 /* Description de la chambre */
 .room-description {
   padding: 80px 0;
-  background: #f8fdf8;
+  background-color: #f5f2ed;
 }
 
 .description-content {
   background: white;
   padding: 50px;
   border-radius: 20px;
-  box-shadow: 0 15px 35px rgba(45, 90, 61, 0.1);
-  border: 1px solid rgba(45, 90, 61, 0.1);
+  box-shadow: 0 15px 35px rgba(139, 115, 85, 0.1);
+  border: 1px solid rgba(139, 115, 85, 0.1);
 }
 
 .description-content h2 {
-  color: #2d5a3d;
+  color: #8b7355;
   font-size: 2.5rem;
   font-weight: 600;
   margin-bottom: 30px;
@@ -81,7 +81,7 @@
   display: block;
   width: 60px;
   height: 3px;
-  background: linear-gradient(90deg, #4a7c5a, #2d5a3d);
+  background: linear-gradient(90deg, #8b7355, #6d5940);
   margin: 15px auto;
   border-radius: 2px;
 }
@@ -98,11 +98,11 @@
 .room-features {
   margin-top: 50px;
   padding-top: 40px;
-  border-top: 2px solid #e8f5e8;
+  border-top: 2px solid rgba(139, 115, 85, 0.2);
 }
 
 .room-features h3 {
-  color: #2d5a3d;
+  color: #8b7355;
   font-size: 1.8rem;
   margin-bottom: 30px;
   text-align: center;
@@ -120,16 +120,16 @@
   align-items: center;
   gap: 15px;
   padding: 15px;
-  background: #f8fdf8;
+  background: #f5f2ed;
   border-radius: 10px;
-  border: 1px solid #e8f5e8;
+  border: 1px solid rgba(139, 115, 85, 0.2);
   transition: all 0.3s ease;
 }
 
 .feature-item:hover {
   transform: translateY(-3px);
-  box-shadow: 0 5px 15px rgba(45, 90, 61, 0.15);
-  border-color: #4a7c5a;
+  box-shadow: 0 5px 15px rgba(139, 115, 85, 0.15);
+  border-color: #8b7355;
 }
 
 .feature-icon {
@@ -146,7 +146,7 @@
 .section-title {
   font-size: 2.5rem;
   font-weight: 600;
-  color: #2d5a3d;
+  color: #8b7355;
   margin-bottom: 60px;
   position: relative;
 }
@@ -156,18 +156,18 @@
   display: block;
   width: 60px;
   height: 3px;
-  background: linear-gradient(90deg, #4a7c5a, #2d5a3d);
+  background: linear-gradient(90deg, #8b7355, #6d5940);
   margin: 15px auto;
   border-radius: 2px;
 }
 
 .service-card {
-  background: white;
+  background: #f5f2ed;
   border-radius: 15px;
   padding: 30px;
   text-align: center;
-  box-shadow: 0 10px 30px rgba(45, 90, 61, 0.1);
-  border: 1px solid rgba(45, 90, 61, 0.1);
+  box-shadow: 0 10px 30px rgba(139, 115, 85, 0.1);
+  border: 1px solid rgba(139, 115, 85, 0.1);
   transition: all 0.3s ease;
   height: 100%;
   display: flex;
@@ -176,8 +176,8 @@
 
 .service-card:hover {
   transform: translateY(-5px);
-  box-shadow: 0 20px 40px rgba(45, 90, 61, 0.15);
-  border-color: #4a7c5a;
+  box-shadow: 0 20px 40px rgba(139, 115, 85, 0.15);
+  border-color: #8b7355;
 }
 
 .service-image-placeholder {
@@ -197,17 +197,17 @@
 .service-image-empty {
   width: 100%;
   height: 100%;
-  background: linear-gradient(135deg, #e8f5e8, #f0f8f0);
+  background: linear-gradient(135deg, #e0ddd6, #d0ccc3);
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #4a7c5a;
+  color: #8b7355;
   font-style: italic;
-  border: 2px dashed #4a7c5a;
+  border: 2px dashed #8b7355;
 }
 
 .service-card h4 {
-  color: #2d5a3d;
+  color: #8b7355;
   font-size: 1.4rem;
   font-weight: 600;
   margin-bottom: 15px;
@@ -222,23 +222,23 @@
 /* Attractions à proximité */
 .nearby-attractions {
   padding: 80px 0;
-  background: #f8fdf8;
+  background-color: #f5f2ed;
 }
 
 .attraction-card {
   background: white;
   padding: 30px;
   border-radius: 15px;
-  box-shadow: 0 10px 30px rgba(45, 90, 61, 0.1);
-  border: 1px solid rgba(45, 90, 61, 0.1);
+  box-shadow: 0 10px 30px rgba(139, 115, 85, 0.1);
+  border: 1px solid rgba(139, 115, 85, 0.1);
   transition: all 0.3s ease;
   height: 100%;
 }
 
 .attraction-card:hover {
   transform: translateY(-3px);
-  box-shadow: 0 15px 35px rgba(45, 90, 61, 0.15);
-  border-color: #4a7c5a;
+  box-shadow: 0 15px 35px rgba(139, 115, 85, 0.15);
+  border-color: #8b7355;
 }
 
 .attraction-info {
@@ -249,14 +249,14 @@
 }
 
 .attraction-card h4 {
-  color: #2d5a3d;
+  color: #8b7355;
   font-size: 1.3rem;
   font-weight: 600;
   margin: 0;
 }
 
 .distance {
-  background: linear-gradient(135deg, #4a7c5a, #2d5a3d);
+  background: linear-gradient(135deg, #8b7355, #6d5940);
   color: white;
   padding: 5px 12px;
   border-radius: 20px;
@@ -277,15 +277,15 @@
 }
 
 .info-content {
-  background: #f8fdf8;
+  background: #f5f2ed;
   padding: 50px;
   border-radius: 20px;
-  box-shadow: 0 15px 35px rgba(45, 90, 61, 0.1);
-  border: 1px solid rgba(45, 90, 61, 0.1);
+  box-shadow: 0 15px 35px rgba(139, 115, 85, 0.1);
+  border: 1px solid rgba(139, 115, 85, 0.1);
 }
 
 .info-content h2 {
-  color: #2d5a3d;
+  color: #8b7355;
   font-size: 2.5rem;
   font-weight: 600;
   margin-bottom: 40px;
@@ -298,14 +298,14 @@
   display: block;
   width: 60px;
   height: 3px;
-  background: linear-gradient(90deg, #4a7c5a, #2d5a3d);
+  background: linear-gradient(90deg, #8b7355, #6d5940);
   margin: 15px auto;
   border-radius: 2px;
 }
 
 .info-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  grid-template-columns: repeat(4, 1fr);
   gap: 30px;
   margin-bottom: 50px;
 }
@@ -315,11 +315,11 @@
   padding: 20px;
   background: white;
   border-radius: 10px;
-  border: 1px solid #e8f5e8;
+  border: 1px solid rgba(139, 115, 85, 0.2);
 }
 
 .info-item h4 {
-  color: #2d5a3d;
+  color: #8b7355;
   font-size: 1.2rem;
   font-weight: 600;
   margin-bottom: 10px;
@@ -335,23 +335,23 @@
 .booking-section {
   text-align: center;
   padding-top: 40px;
-  border-top: 2px solid #e8f5e8;
+  border-top: 2px solid rgba(139, 115, 85, 0.2);
 }
 
 .booking-section h3 {
-  color: #2d5a3d;
+  color:white;
   font-size: 1.8rem;
   margin-bottom: 20px;
 }
 
 .booking-section p {
-  color: #666;
+  color:white;
   font-size: 1.1rem;
   margin-bottom: 30px;
 }
 
 .booking-btn {
-  background: linear-gradient(135deg, #4a7c5a, #2d5a3d);
+  background: linear-gradient(135deg, #8b7355, #6d5940);
   color: white;
   border: none;
   padding: 15px 40px;
@@ -360,13 +360,13 @@
   font-weight: 600;
   cursor: pointer;
   transition: all 0.3s ease;
-  box-shadow: 0 5px 15px rgba(45, 90, 61, 0.3);
+  box-shadow: 0 5px 15px rgba(139, 115, 85, 0.3);
 }
 
 .booking-btn:hover {
   transform: translateY(-2px);
-  box-shadow: 0 8px 25px rgba(45, 90, 61, 0.4);
-  background: linear-gradient(135deg, #2d5a3d, #1a4129);
+  box-shadow: 0 8px 25px rgba(139, 115, 85, 0.4);
+  background: linear-gradient(135deg, #6d5940, #5a4832);
 }
 
 /* Responsivité */
@@ -403,8 +403,8 @@
   }
   
   .info-grid {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 20px;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 15px;
   }
   
   .attraction-info {
@@ -424,7 +424,8 @@
   }
   
   .info-grid {
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
   }
   
   .service-image-placeholder {
