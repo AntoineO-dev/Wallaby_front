@@ -16,10 +16,6 @@ const Carousel = ({ images, roomName }) => {
     );
   };
 
-  const goToSlide = (index) => {
-    setCurrentIndex(index);
-  };
-
   if (!images || images.length === 0) {
     return (
       <div className="carousel-container">
@@ -55,17 +51,6 @@ const Carousel = ({ images, roomName }) => {
         <button className="carousel-btn carousel-btn-next" onClick={nextSlide}>
           &#8250;
         </button>
-
-        {/* Indicateurs */}
-        <div className="carousel-indicators">
-          {images.map((_, index) => (
-            <button
-              key={index}
-              className={`carousel-indicator ${index === currentIndex ? 'active' : ''}`}
-              onClick={() => goToSlide(index)}
-            />
-          ))}
-        </div>
       </div>
     </div>
   );

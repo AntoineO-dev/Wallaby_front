@@ -1,21 +1,88 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import Carousel from '../components/Carousel';
+import roomsService from '../services/roomsService';
 import '../../styles/NidWallabyPage.css';
 
 const NidWallabyPage = () => {
-  // Images pour le carousel (en utilisant l'image existante et quelques autres exemples)
-  const roomImages = [
-    '/api/images/nid-wallaby-1.jpg', // Image principale depuis la base de données
-    '/api/images/nid-wallaby-2.jpg', // Images supplémentaires
-    '/api/images/nid-wallaby-3.jpg',
-    '/api/images/nid-wallaby-4.jpg'
-  ];
+  // États pour gérer les données de la chambre
+  const [roomData, setRoomData] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  // URL de base pour les images
+  const IMAGE_BASE_URL = import.meta.env.VITE_API_URL?.replace('/api/', '') || 'http://localhost:3000';
+  
+  // Fonction pour construire l'URL complète de l'image
+  const getImageUrl = (imageUrl) => {
+    if (!imageUrl) return null;
+    if (imageUrl.startsWith('http')) return imageUrl;
+    return `${IMAGE_BASE_URL}/uploads/${imageUrl}`;
+  };
+
+  // Fonction pour récupérer les données de la chambre "Le Nid du Wallaby"
+  const fetchRoomData = async () => {
+    try {
+      setLoading(true);
+      setError(null);
+      
+      const response = await roomsService.getRooms();
+      const rooms = response.data;
+      
+      // Chercher la chambre "Le Nid du Wallaby"
+      const nidWallabyRoom = rooms.find(room => 
+        room.room_name === "Le Nid du Wallaby"
+      );
+      
+      if (nidWallabyRoom) {
+        setRoomData(nidWallabyRoom);
+      } else {
+        setError("Chambre 'Le Nid du Wallaby' non trouvée");
+      }
+      
+    } catch (err) {
+      setError(`Erreur lors de la récupération des données: ${err.message}`);
+      console.error('Erreur lors de la récupération de la chambre:', err);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // Récupérer les données au chargement du composant
+  useEffect(() => {
+    fetchRoomData();
+  }, []);
+
+  // Images pour le carousel - utiliser l'image de l'API + images supplémentaires
+  const getRoomImages = () => {
+    const images = [];
+    
+    // Ajouter l'image principale de l'API si disponible
+    if (roomData?.image_url) {
+      const apiImage = getImageUrl(roomData.image_url);
+      if (apiImage) {
+        images.push(apiImage);
+      }
+    }
+    
+    // Ajouter des images supplémentaires (placeholder pour l'instant)
+    // Ces images seront remplacées par de vraies images plus tard
+    const additionalImages = [
+      '/api/images/nid-wallaby-2.jpg',
+      '/api/images/nid-wallaby-3.jpg',
+      '/api/images/nid-wallaby-4.jpg'
+    ];
+    
+    images.push(...additionalImages);
+    
+    // Filtrer les images null ou undefined
+    return images.filter(img => img != null);
+  };
 
   const services = [
     {
       image: null, // Espace réservé pour l'image du petit déjeuner
       title: 'Petit déjeuner',
-      description: 'Petit déjeuner continental servi de 7h à 10h avec produits locaux et bio'
+      description: 'Petit déjeuner continental servi de 7h à 10h avec spécialités du Nord et produits locaux'
     },
     {
       image: null, // Espace réservé pour l'image de la pétanque
@@ -30,30 +97,30 @@ const NidWallabyPage = () => {
     {
       image: null, // Espace réservé pour l'image du bain nordique
       title: 'Bain nordique',
-      description: 'Bain nordique chauffé au feu de bois avec vue sur la nature environnante'
+      description: 'Bain nordique chauffé au feu de bois avec vue sur la campagne du Nord-Pas-de-Calais'
     }
   ];
 
   const nearbyAttractions = [
     {
-      name: 'Château de Chambord',
+      name: 'Mémorial de Vimy',
       distance: '15 min',
-      description: 'Magnifique château Renaissance au cœur de la Sologne'
+      description: 'Site historique majeur de la Première Guerre mondiale avec vue panoramique'
     },
     {
-      name: 'Forêt de Boulogne',
-      distance: '5 min',
-      description: 'Sentiers de randonnée et pistes cyclables dans un cadre naturel préservé'
+      name: 'Arras et ses places',
+      distance: '25 min',
+      description: 'Architecture flamande remarquable et patrimoine UNESCO'
     },
     {
-      name: 'Marché de Romorantin',
-      distance: '20 min',
-      description: 'Marché traditionnel avec produits du terroir tous les mercredis et samedis'
+      name: 'Beffroi de Douai',
+      distance: '30 min',
+      description: 'Patrimoine mondial UNESCO et symbole du Nord-Pas-de-Calais'
     },
     {
-      name: 'Étangs de Sologne',
-      distance: '10 min',
-      description: 'Observation de la faune et pêche dans un environnement paisible'
+      name: 'Carrière Wellington',
+      distance: '25 min',
+      description: 'Musée souterrain unique retraçant l\'histoire de la Grande Guerre'
     }
   ];
 
@@ -65,7 +132,7 @@ const NidWallabyPage = () => {
           <div className="row">
             <div className="col-12">
               <h1 className="room-title">Le Nid du Wallaby</h1>
-              <p className="room-subtitle">Une évasion nature au cœur de la Sologne</p>
+              <p className="room-subtitle">Une évasion nature dans le Nord-Pas-de-Calais</p>
             </div>
           </div>
         </div>
@@ -76,7 +143,24 @@ const NidWallabyPage = () => {
         <div className="container-fluid">
           <div className="row justify-content-center">
             <div className="col-lg-10">
-              <Carousel images={roomImages} roomName="Le Nid du Wallaby" />
+              {loading ? (
+                <div className="text-center">
+                  <div className="spinner-border text-primary" role="status">
+                    <span className="visually-hidden">Chargement des images...</span>
+                  </div>
+                  <p className="mt-2">Chargement des images...</p>
+                </div>
+              ) : error ? (
+                <div className="alert alert-danger text-center" role="alert">
+                  <h5>Erreur de chargement</h5>
+                  <p>{error}</p>
+                  <button className="btn btn-outline-primary" onClick={fetchRoomData}>
+                    Réessayer
+                  </button>
+                </div>
+              ) : (
+                <Carousel images={getRoomImages()} roomName="Le Nid du Wallaby" />
+              )}
             </div>
           </div>
         </div>
@@ -88,18 +172,18 @@ const NidWallabyPage = () => {
           <div className="row justify-content-center">
             <div className="col-lg-8">
               <div className="description-content">
-                <h2>Une expérience unique en Sologne</h2>
+                <h2>Une expérience unique dans le Nord-Pas-de-Calais</h2>
                 <p>
-                  Nichée au cœur de la nature solognote, "Le Nid du Wallaby" vous offre un refuge 
-                  authentique pour vous ressourcer. Cette chambre spacieuse de 35m² allie confort 
+                  Située à Monchy-Le-Preux, petite commune chargée d'histoire, "Le Nid du Wallaby" vous offre un refuge 
+                  authentique pour vous ressourcer loin de l'agitation urbaine. Cette chambre spacieuse de 35m² allie confort 
                   moderne et charme rustique avec ses poutres apparentes et sa décoration soignée 
                   inspirée de l'Australie.
                 </p>
                 <p>
                   Profitez d'un lit queen size ultra-confortable, d'une salle de bain privative 
-                  avec douche à l'italienne, et d'un coin salon avec vue imprenable sur la forêt 
+                  avec douche à l'italienne, et d'un coin salon avec vue sur la campagne nordiste 
                   environnante. La terrasse privative vous permettra de savourer votre café matinal 
-                  en écoutant le chant des oiseaux.
+                  en admirant les paysages vallonnés typiques de la région.
                 </p>
                 
                 <div className="room-features">

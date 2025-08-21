@@ -34,7 +34,7 @@ const Navbar = () => {
     const fetchRooms = async () => {
       try {
         const response = await roomsService.getRooms();
-        setRooms(response.data.slice(0, 3)); // Limiter à 3 chambres
+        setRooms(response.data.slice(0, 4)); // Limiter à 4 chambres
       } catch (error) {
         console.error('Erreur lors de la récupération des chambres:', error);
       }
