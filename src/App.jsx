@@ -4,6 +4,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import '../styles/HomePage.css'; // Import du CSS global
 import HomePage from "./pages/HomePage";
 import NidWallabyPage from "./pages/NidWallabyPage";
+import PrairieSautillantePage from "./pages/PrairieSautillantePage";
 
 const App = () => {
   return (
@@ -14,6 +15,7 @@ const App = () => {
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/chambre/nid-wallaby" element={<NidWallabyPage />} />
+          <Route path="/chambre/prairie-sautillante" element={<PrairieSautillantePage />} />
           {/* Redirections pour les anciennes routes */}
           <Route path="/login" element={<Navigate to="/" replace />} />
           <Route path="/register" element={<Navigate to="/" replace />} />

@@ -52,6 +52,8 @@ const Navbar = () => {
     // Navigation spécifique pour "Le Nid du Wallaby"
     if (roomName === "Le Nid du Wallaby") {
       navigate('/chambre/nid-wallaby');
+    } else if (roomName === "La Prairie Sautillante") {
+      navigate('/chambre/prairie-sautillante');
     } else {
       // Pour les autres chambres, on peut créer une route générique
       // ou rediriger vers la homepage avec une ancre

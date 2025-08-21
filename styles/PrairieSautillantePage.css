@@ -1,0 +1,433 @@
+/* Styles spécifiques pour La Prairie Sautillante */
+.prairie-sautillante-page {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #e8f5e8 0%, #f0f8f0 100%);
+}
+
+/* En-tête de la chambre */
+.room-header {
+  padding: 100px 0 60px;
+  background: linear-gradient(135deg, #2d5a3d 0%, #4a7c5a 100%);
+  color: white;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.room-header::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="20" cy="20" r="2" fill="white" opacity="0.1"/><circle cx="80" cy="40" r="1.5" fill="white" opacity="0.1"/><circle cx="40" cy="80" r="1" fill="white" opacity="0.1"/><circle cx="90" cy="10" r="1" fill="white" opacity="0.1"/><circle cx="10" cy="90" r="1.5" fill="white" opacity="0.1"/></svg>') repeat;
+  animation: twinkle 3s ease-in-out infinite alternate;
+}
+
+@keyframes twinkle {
+  0% { opacity: 0.3; }
+  100% { opacity: 1; }
+}
+
+.room-title {
+  font-size: 3.5rem;
+  font-weight: 700;
+  margin-bottom: 20px;
+  text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+  position: relative;
+  z-index: 2;
+}
+
+.room-subtitle {
+  font-size: 1.3rem;
+  opacity: 0.9;
+  font-style: italic;
+  position: relative;
+  z-index: 2;
+}
+
+/* Galerie d'images */
+.room-gallery {
+  padding: 80px 0;
+  background: white;
+}
+
+/* Description de la chambre */
+.room-description {
+  padding: 80px 0;
+  background: #f8fdf8;
+}
+
+.description-content {
+  background: white;
+  padding: 50px;
+  border-radius: 20px;
+  box-shadow: 0 15px 35px rgba(45, 90, 61, 0.1);
+  border: 1px solid rgba(45, 90, 61, 0.1);
+}
+
+.description-content h2 {
+  color: #2d5a3d;
+  font-size: 2.5rem;
+  font-weight: 600;
+  margin-bottom: 30px;
+  text-align: center;
+  position: relative;
+}
+
+.description-content h2::after {
+  content: '';
+  display: block;
+  width: 60px;
+  height: 3px;
+  background: linear-gradient(90deg, #4a7c5a, #2d5a3d);
+  margin: 15px auto;
+  border-radius: 2px;
+}
+
+.description-content p {
+  font-size: 1.1rem;
+  line-height: 1.8;
+  color: #555;
+  margin-bottom: 25px;
+  text-align: justify;
+}
+
+/* Équipements de la chambre */
+.room-features {
+  margin-top: 50px;
+  padding-top: 40px;
+  border-top: 2px solid #e8f5e8;
+}
+
+.room-features h3 {
+  color: #2d5a3d;
+  font-size: 1.8rem;
+  margin-bottom: 30px;
+  text-align: center;
+}
+
+.features-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 20px;
+  margin-top: 30px;
+}
+
+.feature-item {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  padding: 15px;
+  background: #f8fdf8;
+  border-radius: 10px;
+  border: 1px solid #e8f5e8;
+  transition: all 0.3s ease;
+}
+
+.feature-item:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 5px 15px rgba(45, 90, 61, 0.15);
+  border-color: #4a7c5a;
+}
+
+.feature-icon {
+  font-size: 1.5rem;
+  min-width: 30px;
+}
+
+/* Services inclus */
+.room-services {
+  padding: 80px 0;
+  background: white;
+}
+
+.section-title {
+  font-size: 2.5rem;
+  font-weight: 600;
+  color: #2d5a3d;
+  margin-bottom: 60px;
+  position: relative;
+}
+
+.section-title::after {
+  content: '';
+  display: block;
+  width: 60px;
+  height: 3px;
+  background: linear-gradient(90deg, #4a7c5a, #2d5a3d);
+  margin: 15px auto;
+  border-radius: 2px;
+}
+
+.service-card {
+  background: white;
+  border-radius: 15px;
+  padding: 30px;
+  text-align: center;
+  box-shadow: 0 10px 30px rgba(45, 90, 61, 0.1);
+  border: 1px solid rgba(45, 90, 61, 0.1);
+  transition: all 0.3s ease;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.service-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 20px 40px rgba(45, 90, 61, 0.15);
+  border-color: #4a7c5a;
+}
+
+.service-image-placeholder {
+  width: 100%;
+  height: 200px;
+  margin-bottom: 20px;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.service-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.service-image-empty {
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, #e8f5e8, #f0f8f0);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #4a7c5a;
+  font-style: italic;
+  border: 2px dashed #4a7c5a;
+}
+
+.service-card h4 {
+  color: #2d5a3d;
+  font-size: 1.4rem;
+  font-weight: 600;
+  margin-bottom: 15px;
+}
+
+.service-card p {
+  color: #666;
+  line-height: 1.6;
+  flex-grow: 1;
+}
+
+/* Attractions à proximité */
+.nearby-attractions {
+  padding: 80px 0;
+  background: #f8fdf8;
+}
+
+.attraction-card {
+  background: white;
+  padding: 30px;
+  border-radius: 15px;
+  box-shadow: 0 10px 30px rgba(45, 90, 61, 0.1);
+  border: 1px solid rgba(45, 90, 61, 0.1);
+  transition: all 0.3s ease;
+  height: 100%;
+}
+
+.attraction-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 15px 35px rgba(45, 90, 61, 0.15);
+  border-color: #4a7c5a;
+}
+
+.attraction-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.attraction-card h4 {
+  color: #2d5a3d;
+  font-size: 1.3rem;
+  font-weight: 600;
+  margin: 0;
+}
+
+.distance {
+  background: linear-gradient(135deg, #4a7c5a, #2d5a3d);
+  color: white;
+  padding: 5px 12px;
+  border-radius: 20px;
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+.attraction-card p {
+  color: #666;
+  line-height: 1.6;
+  margin: 0;
+}
+
+/* Informations pratiques */
+.practical-info {
+  padding: 80px 0;
+  background: white;
+}
+
+.info-content {
+  background: #f8fdf8;
+  padding: 50px;
+  border-radius: 20px;
+  box-shadow: 0 15px 35px rgba(45, 90, 61, 0.1);
+  border: 1px solid rgba(45, 90, 61, 0.1);
+}
+
+.info-content h2 {
+  color: #2d5a3d;
+  font-size: 2.5rem;
+  font-weight: 600;
+  margin-bottom: 40px;
+  text-align: center;
+  position: relative;
+}
+
+.info-content h2::after {
+  content: '';
+  display: block;
+  width: 60px;
+  height: 3px;
+  background: linear-gradient(90deg, #4a7c5a, #2d5a3d);
+  margin: 15px auto;
+  border-radius: 2px;
+}
+
+.info-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 30px;
+  margin-bottom: 50px;
+}
+
+.info-item {
+  text-align: center;
+  padding: 20px;
+  background: white;
+  border-radius: 10px;
+  border: 1px solid #e8f5e8;
+}
+
+.info-item h4 {
+  color: #2d5a3d;
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin-bottom: 10px;
+}
+
+.info-item p {
+  color: #666;
+  font-size: 1.1rem;
+  margin: 0;
+}
+
+/* Section de réservation */
+.booking-section {
+  text-align: center;
+  padding-top: 40px;
+  border-top: 2px solid #e8f5e8;
+}
+
+.booking-section h3 {
+  color: #2d5a3d;
+  font-size: 1.8rem;
+  margin-bottom: 20px;
+}
+
+.booking-section p {
+  color: #666;
+  font-size: 1.1rem;
+  margin-bottom: 30px;
+}
+
+.booking-btn {
+  background: linear-gradient(135deg, #4a7c5a, #2d5a3d);
+  color: white;
+  border: none;
+  padding: 15px 40px;
+  border-radius: 30px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 5px 15px rgba(45, 90, 61, 0.3);
+}
+
+.booking-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(45, 90, 61, 0.4);
+  background: linear-gradient(135deg, #2d5a3d, #1a4129);
+}
+
+/* Responsivité */
+@media (max-width: 768px) {
+  .room-title {
+    font-size: 2.5rem;
+  }
+  
+  .room-subtitle {
+    font-size: 1.1rem;
+  }
+  
+  .description-content,
+  .info-content {
+    padding: 30px 20px;
+  }
+  
+  .description-content h2,
+  .info-content h2 {
+    font-size: 2rem;
+  }
+  
+  .section-title {
+    font-size: 2rem;
+  }
+  
+  .service-card,
+  .attraction-card {
+    padding: 20px;
+  }
+  
+  .features-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .info-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+  }
+  
+  .attraction-info {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+}
+
+@media (max-width: 480px) {
+  .room-header {
+    padding: 80px 0 40px;
+  }
+  
+  .room-title {
+    font-size: 2rem;
+  }
+  
+  .info-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .service-image-placeholder {
+    height: 150px;
+  }
+}
