@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import '../../styles/HomePage.css';
 import RoomCard from '../components/roomCard';
 import roomsService from '../services/roomsService';
@@ -6,6 +7,9 @@ import monchy from '../assets/monchy.jpg';
 import logo from '../assets/logoV2wallaby.png';
 
 const HomePage = () => {
+  // Hook pour la navigation
+  const navigate = useNavigate();
+  
   // État pour stocker les données des chambres
   const [rooms, setRooms] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -37,7 +41,20 @@ const HomePage = () => {
   // Fonction pour gérer le clic sur "Voir chambres"
   const handleViewRooms = (roomId, roomTitle) => {
     console.log(`Voir chambres ${roomTitle} (ID: ${roomId})`);
-
+    
+    // Navigation vers la page spécifique selon le nom de la chambre
+    if (roomTitle === "Le Nid du Wallaby") {
+      navigate('/chambre/nid-wallaby');
+    } else if (roomTitle === "La Prairie Sautillante") {
+      navigate('/chambre/prairie-sautillante');
+    } else if (roomTitle === "L'Oasis des Marsupiaux") {
+      navigate('/chambre/oasis-marsupiaux');
+    } else if (roomTitle === "Le Repos du Kangourou") {
+      navigate('/chambre/repos-kangourou');
+    } else {
+      // Pour les autres chambres non définies, rediriger vers la homepage
+      console.log(`Navigation vers ${roomTitle} - Route non définie`);
+    }
   };
   return (
     <div className="homepage">
