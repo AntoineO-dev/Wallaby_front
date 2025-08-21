@@ -6,6 +6,7 @@ import HomePage from "./pages/HomePage";
 import NidWallabyPage from "./pages/NidWallabyPage";
 import PrairieSautillantePage from "./pages/PrairieSautillantePage";
 import OasisMarsupiauxPage from "./pages/OasisMarsupiauxPage";
+import ReposKangourouPage from "./pages/ReposKangourouPage";
 
 const App = () => {
   return (
@@ -18,6 +19,7 @@ const App = () => {
           <Route path="/chambre/nid-wallaby" element={<NidWallabyPage />} />
           <Route path="/chambre/prairie-sautillante" element={<PrairieSautillantePage />} />
           <Route path="/chambre/oasis-marsupiaux" element={<OasisMarsupiauxPage />} />
+          <Route path="/chambre/repos-kangourou" element={<ReposKangourouPage />} />
           {/* Redirections pour les anciennes routes */}
           <Route path="/login" element={<Navigate to="/" replace />} />
           <Route path="/register" element={<Navigate to="/" replace />} />

@@ -56,6 +56,8 @@ const Navbar = () => {
       navigate('/chambre/prairie-sautillante');
     } else if (roomName === "L'Oasis des Marsupiaux") {
       navigate('/chambre/oasis-marsupiaux');
+    } else if (roomName === "Le Repos du Kangourou") {
+      navigate('/chambre/repos-kangourou');
     } else {
       // Pour les autres chambres, on peut créer une route générique
       // ou rediriger vers la homepage avec une ancre
