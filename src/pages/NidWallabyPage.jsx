@@ -142,7 +142,7 @@ const NidWallabyPage = () => {
       <section className="room-gallery">
         <div className="container-fluid">
           <div className="row justify-content-center">
-            <div className="col-lg-10">
+            <div className="col-lg-8">
               {loading ? (
                 <div className="text-center">
                   <div className="spinner-border text-primary" role="status">

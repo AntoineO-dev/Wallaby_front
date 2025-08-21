@@ -1,7 +1,7 @@
 /* Carousel Styles - Adapté pour NidWallabyPage */
 .carousel-container {
   width: 100%;
-  max-width: 850px;
+  max-width: 700px;
   margin: 0 auto;
   border-radius: 16px;
   overflow: hidden;
@@ -55,28 +55,26 @@
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
-  background: rgba(139, 115, 85, 0.9);
-  border: 1px solid rgba(255, 255, 255, 0.3);
+  background: transparent;
+  border: none;
   color: white;
-  font-size: 1.1rem;
-  font-weight: normal;
-  width: 35px;
-  height: 35px;
-  border-radius: 50%;
+  font-size: 1.5rem;
+  font-weight: 900;
+  width: 40px;
+  height: 40px;
   cursor: pointer;
   z-index: 10;
   transition: all 0.3s ease;
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
-  backdrop-filter: blur(5px);
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
 }
 
 .carousel-btn:hover {
-  background: rgba(109, 89, 64, 0.95);
-  transform: translateY(-50%) scale(1.05);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  color: white;
+  transform: translateY(-50%) scale(1.1);
+  text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.9);
 }
 
 .carousel-btn:active {
@@ -162,9 +160,9 @@
   }
   
   .carousel-btn {
-    width: 28px;
-    height: 28px;
-    font-size: 0.8rem;
+    width: 35px;
+    height: 35px;
+    font-size: 1.2rem;
   }
   
   .carousel-btn-prev {
