@@ -1,0 +1,205 @@
+/* Protection Admin basée sur les utilisateurs connectés */
+.admin-access-denied {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #dc3545 0%, #c82333 100%);
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+
+.admin-access-denied::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><polygon points="50,10 90,90 10,90" fill="rgba(255,255,255,0.05)"/></svg>');
+  background-size: 100px 100px;
+  opacity: 0.3;
+}
+
+.access-denied-card {
+  background: white;
+  border-radius: 15px;
+  padding: 40px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+  position: relative;
+  z-index: 1;
+  animation: slideInDown 0.6s ease-out;
+}
+
+.denied-icon {
+  font-size: 4rem;
+  color: #dc3545;
+  margin-bottom: 20px;
+  animation: shake 2s ease-in-out infinite;
+}
+
+.denied-title {
+  color: #dc3545;
+  font-weight: 700;
+  margin-bottom: 15px;
+  font-size: 1.8rem;
+}
+
+.denied-message {
+  color: #6c757d;
+  font-size: 1.1rem;
+  line-height: 1.6;
+  margin-bottom: 25px;
+}
+
+.denied-actions {
+  margin-top: 25px;
+}
+
+.denied-actions .btn {
+  border-radius: 25px;
+  padding: 12px 25px;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.denied-actions .btn-primary {
+  background: linear-gradient(135deg, #8b7355 0%, #6d5940 100%);
+  border: none;
+}
+
+.denied-actions .btn-primary:hover {
+  background: linear-gradient(135deg, #6d5940 0%, #5a4a35 100%);
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(139, 115, 85, 0.3);
+}
+
+.denied-actions .btn-outline-secondary {
+  border: 2px solid #6c757d;
+  color: #6c757d;
+}
+
+.denied-actions .btn-outline-secondary:hover {
+  background: #6c757d;
+  border-color: #6c757d;
+  color: white;
+  transform: translateY(-2px);
+}
+
+/* Barre d'information admin */
+.admin-info-bar {
+  background: linear-gradient(135deg, #8b7355 0%, #6d5940 100%);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.admin-info-bar .badge {
+  font-size: 0.7rem;
+  padding: 4px 8px;
+  border-radius: 10px;
+  font-weight: 600;
+}
+
+.admin-info-bar .btn-outline-light {
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  color: white;
+  border-radius: 20px;
+  padding: 5px 15px;
+  font-size: 0.85rem;
+  transition: all 0.3s ease;
+}
+
+.admin-info-bar .btn-outline-light:hover {
+  background: rgba(255, 255, 255, 0.2);
+  border-color: white;
+  color: white;
+  transform: scale(1.05);
+}
+
+/* Alerte d'information */
+.access-denied-card .alert {
+  border-radius: 10px;
+  border: none;
+  margin: 20px 0;
+}
+
+.access-denied-card .alert-info {
+  background: linear-gradient(135deg, #d1ecf1 0%, #bee5eb 100%);
+  color: #0c5460;
+}
+
+/* Animations */
+@keyframes slideInDown {
+  from {
+    opacity: 0;
+    transform: translateY(-50px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-5px); }
+  75% { transform: translateX(5px); }
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .access-denied-card {
+    padding: 30px 20px;
+    margin: 20px;
+  }
+  
+  .denied-icon {
+    font-size: 3rem;
+  }
+  
+  .denied-title {
+    font-size: 1.5rem;
+  }
+  
+  .denied-message {
+    font-size: 1rem;
+  }
+  
+  .denied-actions .btn {
+    display: block;
+    width: 100%;
+    margin-bottom: 10px;
+  }
+  
+  .admin-info-bar .container-fluid {
+    padding: 10px;
+  }
+  
+  .admin-info-bar .row {
+    flex-direction: column;
+    gap: 10px;
+    text-align: center;
+  }
+}
+
+/* Amélioration de l'accessibilité */
+.access-denied-card .btn:focus {
+  outline: 2px solid #8b7355;
+  outline-offset: 2px;
+}
+
+/* Effet de focus pour les éléments interactifs */
+.denied-actions .btn:focus-visible {
+  box-shadow: 0 0 0 3px rgba(139, 115, 85, 0.25);
+}
+
+/* Style pour les utilisateurs avec compte mais sans droits admin */
+.admin-access-denied .fas.fa-shield-alt {
+  color: #ffc107;
+}
+
+/* Amélioration du contraste */
+.admin-info-bar {
+  color: white;
+}
+
+.admin-info-bar small {
+  font-weight: 500;
+}

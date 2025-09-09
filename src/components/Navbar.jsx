@@ -10,6 +10,7 @@ const Navbar = () => {
   const [rooms, setRooms] = useState([]);
   const [showDropdown, setShowDropdown] = useState(false);
   const [showAuthModal, setShowAuthModal] = useState(false);
+  const [showAdminMenu, setShowAdminMenu] = useState(false);
   const [isLogin, setIsLogin] = useState(true);
   const [user, setUser] = useState(null);
   const [authForm, setAuthForm] = useState({
@@ -29,6 +30,20 @@ const Navbar = () => {
     setUser(currentUser);
   }, []);
 
+  // Fermer le menu admin quand on clique ailleurs
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (showAdminMenu && !event.target.closest('.admin-dropdown')) {
+        setShowAdminMenu(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [showAdminMenu]);
+
   // Récupérer les chambres pour le menu déroulant
   useEffect(() => {
     const fetchRooms = async () => {
@@ -44,6 +59,10 @@ const Navbar = () => {
 
   const handleDropdownToggle = () => {
     setShowDropdown(!showDropdown);
+  };
+
+  const handleAdminMenuToggle = () => {
+    setShowAdminMenu(!showAdminMenu);
   };
 
   const handleRoomNavigation = (roomName) => {
@@ -158,6 +177,12 @@ const Navbar = () => {
   const handleLogout = () => {
     authService.logout();
     setUser(null);
+    setShowAdminMenu(false);
+  };
+
+  const handleAdminAccess = () => {
+    setShowAdminMenu(false);
+    navigate('/admin');
   };
 
   return (
@@ -217,13 +242,46 @@ const Navbar = () => {
               {user ? (
                 // Si l'utilisateur est connecté
                 <div className="user-menu">
-                  <span className="user-name">Bonjour {user.firstName},</span>
-                  <button 
-                    className="auth-button logout-btn"
-                    onClick={handleLogout}
-                  >
-                    Se déconnecter
-                  </button>
+                  <span className="user-name">Bonjour {user.first_name},</span>
+                  {authService.isAdmin() ? (
+                    // Menu déroulant pour les administrateurs
+                    <div className="admin-dropdown">
+                      <button 
+                        className="auth-button admin-btn"
+                        onClick={handleAdminMenuToggle}
+                      >
+                        <i className="fas fa-cog me-1"></i>
+                        Admin
+                        <i className={`fas fa-chevron-${showAdminMenu ? 'up' : 'down'} ms-1`}></i>
+                      </button>
+                      {showAdminMenu && (
+                        <div className="admin-menu">
+                          <button 
+                            className="admin-menu-item"
+                            onClick={handleAdminAccess}
+                          >
+                            <i className="fas fa-tachometer-alt me-2"></i>
+                            Tableau de bord
+                          </button>
+                          <button 
+                            className="admin-menu-item logout-item"
+                            onClick={handleLogout}
+                          >
+                            <i className="fas fa-sign-out-alt me-2"></i>
+                            Se déconnecter
+                          </button>
+                        </div>
+                      )}
+                    </div>
+                  ) : (
+                    // Bouton simple de déconnexion pour les utilisateurs normaux
+                    <button 
+                      className="auth-button logout-btn"
+                      onClick={handleLogout}
+                    >
+                      Se déconnecter
+                    </button>
+                  )}
                 </div>
               ) : (
                 // Si l'utilisateur n'est pas connecté

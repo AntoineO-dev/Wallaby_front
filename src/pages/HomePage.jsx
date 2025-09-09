@@ -58,8 +58,6 @@ const HomePage = () => {
   };
   return (
     <div className="homepage">
-
-
       {/* Section Hero avec image de fond */}
       <section className="hero-section">
         <div className="hero-image-background" style={{backgroundImage: `url(${monchy})`}}></div>

@@ -1,0 +1,367 @@
+/* Page Administrateur */
+.admin-page {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #f5f2ed 0%, #e8e0d0 100%);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* En-tête */
+.admin-header {
+  background: linear-gradient(135deg, #8b7355 0%, #6d5940 100%);
+  color: white;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.admin-title {
+  margin: 0;
+  font-size: 1.8rem;
+  font-weight: 600;
+}
+
+/* Cartes de statistiques */
+.stat-card {
+  background: white;
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+  border: 1px solid rgba(139, 115, 85, 0.1);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.stat-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12);
+}
+
+.stat-icon {
+  width: 60px;
+  height: 60px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  color: white;
+  flex-shrink: 0;
+}
+
+.stat-icon.bg-primary {
+  background: linear-gradient(135deg, #007bff 0%, #0056b3 100%);
+}
+
+.stat-icon.bg-success {
+  background: linear-gradient(135deg, #28a745 0%, #1e7e34 100%);
+}
+
+.stat-icon.bg-warning {
+  background: linear-gradient(135deg, #ffc107 0%, #e0a800 100%);
+}
+
+.stat-icon.bg-info {
+  background: linear-gradient(135deg, #17a2b8 0%, #117a8b 100%);
+}
+
+.stat-content h3 {
+  margin: 0;
+  font-size: 2rem;
+  font-weight: 700;
+  color: #8b7355;
+}
+
+.stat-content p {
+  margin: 0;
+  color: #6c757d;
+  font-weight: 500;
+}
+
+/* Section des filtres */
+.filters-section {
+  background: white;
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+  border: 1px solid rgba(139, 115, 85, 0.1);
+}
+
+.filters-section .form-label {
+  font-weight: 600;
+  color: #8b7355;
+  margin-bottom: 8px;
+}
+
+.filters-section .form-control,
+.filters-section .form-select {
+  border: 2px solid #e9ecef;
+  border-radius: 8px;
+  padding: 10px 12px;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.filters-section .form-control:focus,
+.filters-section .form-select:focus {
+  border-color: #8b7355;
+  box-shadow: 0 0 0 0.2rem rgba(139, 115, 85, 0.25);
+}
+
+/* Conteneur du tableau */
+.reservations-table-container {
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+  border: 1px solid rgba(139, 115, 85, 0.1);
+  overflow: hidden;
+}
+
+/* Tableau des réservations */
+.reservations-table {
+  margin: 0;
+}
+
+.reservations-table thead {
+  background: linear-gradient(135deg, #8b7355 0%, #6d5940 100%);
+}
+
+.reservations-table thead th {
+  border: none;
+  color: white;
+  font-weight: 600;
+  padding: 15px 12px;
+  text-transform: uppercase;
+  font-size: 0.85rem;
+  letter-spacing: 0.5px;
+}
+
+.reservations-table tbody tr {
+  transition: background-color 0.2s ease;
+}
+
+.reservations-table tbody tr:hover {
+  background-color: rgba(139, 115, 85, 0.05);
+}
+
+.reservations-table tbody td {
+  padding: 15px 12px;
+  vertical-align: middle;
+  border-bottom: 1px solid rgba(139, 115, 85, 0.1);
+}
+
+/* Badges de statut */
+.badge {
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 6px 12px;
+  border-radius: 20px;
+}
+
+/* Boutons d'action */
+.action-buttons {
+  display: flex;
+  gap: 5px;
+  justify-content: flex-start;
+}
+
+.action-buttons .btn {
+  border-radius: 6px;
+  padding: 6px 10px;
+  transition: all 0.2s ease;
+}
+
+.action-buttons .btn:hover {
+  transform: scale(1.05);
+}
+
+.action-buttons .btn-success {
+  background: linear-gradient(135deg, #28a745 0%, #1e7e34 100%);
+  border: none;
+}
+
+.action-buttons .btn-danger {
+  background: linear-gradient(135deg, #dc3545 0%, #c82333 100%);
+  border: none;
+}
+
+/* Modal personnalisée */
+.modal-content {
+  border-radius: 12px;
+  border: none;
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+}
+
+.modal-header {
+  background: linear-gradient(135deg, #8b7355 0%, #6d5940 100%);
+  color: white;
+  border-radius: 12px 12px 0 0;
+  border-bottom: none;
+}
+
+.modal-header .btn-close {
+  filter: invert(1);
+}
+
+.modal-body {
+  padding: 25px;
+}
+
+.modal-footer {
+  border-top: 1px solid rgba(139, 115, 85, 0.1);
+  padding: 20px 25px;
+}
+
+/* Boutons principaux */
+.btn-primary {
+  background: linear-gradient(135deg, #8b7355 0%, #6d5940 100%);
+  border: none;
+  border-radius: 8px;
+  padding: 10px 20px;
+  font-weight: 600;
+  transition: all 0.2s ease;
+}
+
+.btn-primary:hover {
+  background: linear-gradient(135deg, #6d5940 0%, #5a4a35 100%);
+  transform: translateY(-1px);
+}
+
+.btn-outline-secondary {
+  border: 2px solid #8b7355;
+  color: #8b7355;
+  border-radius: 8px;
+  padding: 10px 20px;
+  font-weight: 600;
+  transition: all 0.2s ease;
+}
+
+.btn-outline-secondary:hover {
+  background: #8b7355;
+  border-color: #8b7355;
+  color: white;
+}
+
+.btn-secondary {
+  background: #6c757d;
+  border: none;
+  border-radius: 8px;
+  padding: 10px 20px;
+  font-weight: 600;
+}
+
+/* Spinner de chargement */
+.spinner-border {
+  width: 3rem;
+  height: 3rem;
+}
+
+/* État vide */
+.fa-calendar-times {
+  opacity: 0.3;
+}
+
+/* Alertes */
+.alert {
+  border-radius: 10px;
+  border: none;
+  padding: 15px 20px;
+}
+
+.alert-danger {
+  background: linear-gradient(135deg, #f8d7da 0%, #f5c6cb 100%);
+  color: #721c24;
+}
+
+.alert-warning {
+  background: linear-gradient(135deg, #fff3cd 0%, #ffeaa7 100%);
+  color: #856404;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .admin-title {
+    font-size: 1.5rem;
+  }
+  
+  .stat-card {
+    margin-bottom: 15px;
+  }
+  
+  .action-buttons {
+    flex-direction: column;
+    gap: 3px;
+  }
+  
+  .action-buttons .btn {
+    font-size: 0.8rem;
+    padding: 4px 8px;
+  }
+  
+  .reservations-table {
+    font-size: 0.85rem;
+  }
+  
+  .reservations-table thead th,
+  .reservations-table tbody td {
+    padding: 10px 8px;
+  }
+  
+  .filters-section .row > div {
+    margin-bottom: 15px;
+  }
+}
+
+@media (max-width: 576px) {
+  .admin-header .row {
+    text-align: center;
+  }
+  
+  .admin-header .col-md-6:last-child {
+    text-align: center !important;
+    margin-top: 15px;
+  }
+  
+  .reservations-table-container {
+    overflow-x: auto;
+  }
+  
+  .reservations-table {
+    min-width: 800px;
+  }
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.stat-card,
+.filters-section,
+.reservations-table-container {
+  animation: fadeIn 0.6s ease-out;
+}
+
+/* Amélioration de l'accessibilité */
+.btn:focus {
+  box-shadow: 0 0 0 0.2rem rgba(139, 115, 85, 0.25);
+}
+
+.form-control:focus,
+.form-select:focus {
+  outline: none;
+}
+
+/* Styles pour les icônes */
+.fas {
+  transition: transform 0.2s ease;
+}
+
+.btn:hover .fas {
+  transform: scale(1.1);
+}
