@@ -10,6 +10,8 @@ import OasisMarsupiauxPage from "./pages/OasisMarsupiauxPage";
 import ReposKangourouPage from "./pages/ReposKangourouPage";
 import ReservationPage from "./pages/ReservationPage";
 import AdminPage from "./pages/AdminPage";
+import ProfilePage from "./pages/ProfilePage";
+import MyReservationsPage from "./pages/MyReservationsPage";
 
 const App = () => {
   return (
@@ -24,6 +26,10 @@ const App = () => {
           <Route path="/chambre/oasis-marsupiaux" element={<OasisMarsupiauxPage />} />
           <Route path="/chambre/repos-kangourou" element={<ReposKangourouPage />} />
           <Route path="/reservation" element={<ReservationPage />} />
+          
+          {/* Pages Client */}
+          <Route path="/profile" element={<ProfilePage />} />
+          <Route path="/mes-reservations" element={<MyReservationsPage />} />
           
           {/* Route Admin Protégée */}
           <Route 

@@ -11,6 +11,7 @@ const Navbar = () => {
   const [showDropdown, setShowDropdown] = useState(false);
   const [showAuthModal, setShowAuthModal] = useState(false);
   const [showAdminMenu, setShowAdminMenu] = useState(false);
+  const [showClientMenu, setShowClientMenu] = useState(false);
   const [isLogin, setIsLogin] = useState(true);
   const [user, setUser] = useState(null);
   const [authForm, setAuthForm] = useState({
@@ -30,11 +31,14 @@ const Navbar = () => {
     setUser(currentUser);
   }, []);
 
-  // Fermer le menu admin quand on clique ailleurs
+  // Fermer les menus quand on clique ailleurs
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (showAdminMenu && !event.target.closest('.admin-dropdown')) {
         setShowAdminMenu(false);
+      }
+      if (showClientMenu && !event.target.closest('.client-dropdown')) {
+        setShowClientMenu(false);
       }
     };
 
@@ -42,7 +46,7 @@ const Navbar = () => {
     return () => {
       document.removeEventListener('mousedown', handleClickOutside);
     };
-  }, [showAdminMenu]);
+  }, [showAdminMenu, showClientMenu]);
 
   // Récupérer les chambres pour le menu déroulant
   useEffect(() => {
@@ -63,6 +67,10 @@ const Navbar = () => {
 
   const handleAdminMenuToggle = () => {
     setShowAdminMenu(!showAdminMenu);
+  };
+
+  const handleClientMenuToggle = () => {
+    setShowClientMenu(!showClientMenu);
   };
 
   const handleRoomNavigation = (roomName) => {
@@ -178,11 +186,22 @@ const Navbar = () => {
     authService.logout();
     setUser(null);
     setShowAdminMenu(false);
+    setShowClientMenu(false);
   };
 
   const handleAdminAccess = () => {
     setShowAdminMenu(false);
     navigate('/admin');
+  };
+
+  const handleClientProfile = () => {
+    setShowClientMenu(false);
+    navigate('/profile');
+  };
+
+  const handleClientOrders = () => {
+    setShowClientMenu(false);
+    navigate('/mes-reservations');
   };
 
   return (
@@ -274,13 +293,42 @@ const Navbar = () => {
                       )}
                     </div>
                   ) : (
-                    // Bouton simple de déconnexion pour les utilisateurs normaux
-                    <button 
-                      className="auth-button logout-btn"
-                      onClick={handleLogout}
-                    >
-                      Se déconnecter
-                    </button>
+                    // Menu déroulant pour les clients normaux
+                    <div className="client-dropdown">
+                      <button 
+                        className="auth-button client-btn"
+                        onClick={handleClientMenuToggle}
+                      >
+                        <i className="fas fa-user me-1"></i>
+                        Mon compte
+                        <i className={`fas fa-chevron-${showClientMenu ? 'up' : 'down'} ms-1`}></i>
+                      </button>
+                      {showClientMenu && (
+                        <div className="client-menu">
+                          <button 
+                            className="client-menu-item"
+                            onClick={handleClientProfile}
+                          >
+                            <i className="fas fa-user-edit me-2"></i>
+                            Mon profil
+                          </button>
+                          <button 
+                            className="client-menu-item"
+                            onClick={handleClientOrders}
+                          >
+                            <i className="fas fa-calendar-check me-2"></i>
+                            Mes réservations
+                          </button>
+                          <button 
+                            className="client-menu-item logout-item"
+                            onClick={handleLogout}
+                          >
+                            <i className="fas fa-sign-out-alt me-2"></i>
+                            Se déconnecter
+                          </button>
+                        </div>
+                      )}
+                    </div>
                   )}
                 </div>
               ) : (

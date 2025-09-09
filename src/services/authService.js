@@ -31,16 +31,13 @@ function getToken() {
 
 // Fonction pour sauvegarder les infos utilisateur
 function saveUser(user) {
-  console.log('🔍 Sauvegarde utilisateur:', user);
   localStorage.setItem('user', JSON.stringify(user));
 }
 
 // Fonction pour récupérer les infos utilisateur
 function getUser() {
   const user = localStorage.getItem('user');
-  const parsedUser = user ? JSON.parse(user) : null;
-  console.log('🔍 Récupération utilisateur:', parsedUser);
-  return parsedUser;
+  return user ? JSON.parse(user) : null;
 }
 
 // Fonction pour vérifier si l'utilisateur est connecté
@@ -51,12 +48,9 @@ function isLoggedIn() {
 // Fonction pour vérifier si l'utilisateur connecté est admin
 function isAdmin() {
   const user = getUser();
-  console.log('🔍 Vérification admin pour:', user);
   if (!user) return false;
   // Vérifier si l'utilisateur a le rôle 'admin' dans la base de données
-  const isAdminUser = user.role === 'admin';
-  console.log('🔍 Est admin?', isAdminUser, 'Role:', user.role);
-  return isAdminUser;
+  return user.role === 'admin';
 }
 
 // Fonction pour récupérer le rôle de l'utilisateur
