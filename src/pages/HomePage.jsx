@@ -74,7 +74,7 @@ const HomePage = () => {
         <div className="container-fluid">
           <h2 className="section-title text-center">Nature et bien-être</h2>
 
-          {/* Cartes des chambres avec images d'illustration au-dessus */}
+          
           <div className="row g-4 justify-content-center">
             {loading ? (
               // Affichage pendant le chargement

@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import reservationService from '../services/reservationService';
 import '../../styles/ReservationPage.css';
 
 const ReservationPage = () => {
@@ -21,6 +22,8 @@ const ReservationPage = () => {
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState('');
+  const [availabilityChecking, setAvailabilityChecking] = useState(false);
+  const [availabilityError, setAvailabilityError] = useState('');
 
   // Liste des chambres disponibles
   const rooms = [
@@ -37,6 +40,59 @@ const ReservationPage = () => {
       ...prev,
       [name]: value
     }));
+  };
+
+  // Vérification automatique de disponibilité quand les dates ou la chambre changent
+  useEffect(() => {
+    if (formData.room && formData.checkIn && formData.checkOut) {
+      checkAvailability();
+    } else {
+      setAvailabilityError('');
+    }
+  }, [formData.room, formData.checkIn, formData.checkOut]);
+
+  // Fonction pour vérifier la disponibilité
+  const checkAvailability = async () => {
+    // Vérifier que la date de départ est après la date d'arrivée
+    if (new Date(formData.checkOut) <= new Date(formData.checkIn)) {
+      setAvailabilityError('La date de départ doit être après la date d\'arrivée.');
+      return;
+    }
+
+    setAvailabilityChecking(true);
+    setAvailabilityError('');
+
+    try {
+      // Convertir la valeur de la chambre en ID numérique (selon votre base de données)
+      const roomIdMap = {
+        'nid-wallaby': 1,
+        'prairie-sautillante': 2,
+        'oasis-marsupiaux': 3,
+        'repos-kangourou': 4
+      };
+
+      const roomId = roomIdMap[formData.room];
+      
+      const availabilityResult = await reservationService.checkRoomAvailability(
+        roomId,
+        formData.checkIn,
+        formData.checkOut
+      );
+
+      if (!availabilityResult.isAvailable) {
+        setAvailabilityError(
+          `Cette chambre n'est pas disponible pour ces dates. ${
+            availabilityResult.conflictingReservations?.length > 0 
+              ? 'Il y a des réservations existantes sur cette période.' 
+              : ''
+          }`
+        );
+      }
+    } catch (error) {
+      setAvailabilityError(error.message);
+    } finally {
+      setAvailabilityChecking(false);
+    }
   };
 
   // Calcul du nombre de nuits
@@ -81,12 +137,33 @@ const ReservationPage = () => {
       return;
     }
 
+    // Vérifier s'il y a une erreur de disponibilité
+    if (availabilityError) {
+      setError('Veuillez résoudre les problèmes de disponibilité avant de réserver.');
+      setLoading(false);
+      return;
+    }
+
     try {
-      // Simulation d'envoi (remplace par ton API)
-      await new Promise(resolve => setTimeout(resolve, 2000));
+      // Convertir la valeur de la chambre en ID numérique
+      const roomIdMap = {
+        'nid-wallaby': 1,
+        'prairie-sautillante': 2,
+        'oasis-marsupiaux': 3,
+        'repos-kangourou': 4
+      };
+
+      const reservationData = {
+        ...formData,
+        roomId: roomIdMap[formData.room],
+        totalPrice: calculateTotal()
+      };
+
+      // Envoyer la réservation au backend
+      const result = await reservationService.createReservation(reservationData);
       
       setSuccess(true);
-      console.log('Réservation soumise:', formData);
+      console.log('Réservation créée avec succès:', result);
       
       // Redirection après succès
       setTimeout(() => {
@@ -94,7 +171,7 @@ const ReservationPage = () => {
       }, 3000);
       
     } catch (err) {
-      setError('Erreur lors de l\'envoi de la réservation. Veuillez réessayer.');
+      setError(err.message);
     } finally {
       setLoading(false);
     }
@@ -254,6 +331,34 @@ const ReservationPage = () => {
                           required
                         />
                       </div>
+                    </div>
+
+                    {/* Message de vérification de disponibilité */}
+                    {availabilityChecking && (
+                      <div className="alert alert-info mt-3">
+                        <i className="fas fa-spinner fa-spin me-2"></i>
+                        Vérification de la disponibilité...
+                      </div>
+                    )}
+
+                    {/* Message d'erreur de disponibilité */}
+                    {availabilityError && (
+                      <div className="alert alert-warning mt-3">
+                        <i className="fas fa-exclamation-triangle me-2"></i>
+                        {availabilityError}
+                      </div>
+                    )}
+
+                    {/* Message de disponibilité confirmée */}
+                    {formData.room && formData.checkIn && formData.checkOut && 
+                     !availabilityChecking && !availabilityError && (
+                      <div className="alert alert-success mt-3">
+                        <i className="fas fa-check-circle me-2"></i>
+                        Parfait ! Cette chambre est disponible pour ces dates.
+                      </div>
+                    )}
+
+                    <div className="row">
                       <div className="col-md-4">
                         <label htmlFor="guests" className="form-label">Nombre de voyageurs</label>
                         <select
@@ -328,9 +433,12 @@ const ReservationPage = () => {
                     <button
                       type="submit"
                       className="btn btn-primary"
-                      disabled={loading}
+                      disabled={loading || availabilityChecking || !!availabilityError}
                     >
-                      {loading ? 'Envoi en cours...' : 'Confirmer la réservation'}
+                      {loading ? 'Envoi en cours...' : 
+                       availabilityChecking ? 'Vérification...' :
+                       availabilityError ? 'Dates non disponibles' :
+                       'Confirmer la réservation'}
                     </button>
                   </div>
                 </form>

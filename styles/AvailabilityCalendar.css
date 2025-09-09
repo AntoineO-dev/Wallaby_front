@@ -1,0 +1,152 @@
+/* Calendrier de disponibilité */
+.availability-calendar {
+  background: white;
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  margin-top: 20px;
+}
+
+.calendar-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  padding-bottom: 15px;
+  border-bottom: 2px solid #f5f2ed;
+}
+
+.calendar-header h5 {
+  color: #8b7355;
+  font-weight: 600;
+  margin: 0;
+}
+
+.calendar-grid {
+  width: 100%;
+}
+
+.calendar-weekdays {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 5px;
+  margin-bottom: 10px;
+}
+
+.calendar-weekday {
+  text-align: center;
+  font-weight: 600;
+  color: #8b7355;
+  padding: 8px;
+  font-size: 0.85rem;
+}
+
+.calendar-days {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 5px;
+}
+
+.calendar-day {
+  aspect-ratio: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  position: relative;
+}
+
+.calendar-day.empty {
+  cursor: default;
+}
+
+.calendar-day.available {
+  background-color: #f8f9fa;
+  border: 2px solid #e9ecef;
+  color: #495057;
+}
+
+.calendar-day.available:hover {
+  background-color: #8b7355;
+  color: white;
+  transform: scale(1.05);
+}
+
+.calendar-day.reserved {
+  background-color: #dc3545;
+  color: white;
+  cursor: not-allowed;
+  opacity: 0.8;
+}
+
+.calendar-day.past {
+  background-color: #6c757d;
+  color: white;
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+.calendar-day.selected {
+  background-color: #8b7355;
+  color: white;
+  border: 2px solid #6d5940;
+}
+
+/* Légende */
+.calendar-legend {
+  border-top: 2px solid #f5f2ed;
+  padding-top: 15px;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.legend-color {
+  width: 20px;
+  height: 20px;
+  border-radius: 4px;
+  display: inline-block;
+}
+
+.legend-color.available {
+  background-color: #f8f9fa;
+  border: 2px solid #e9ecef;
+}
+
+.legend-color.reserved {
+  background-color: #dc3545;
+}
+
+.legend-color.past {
+  background-color: #6c757d;
+  opacity: 0.5;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .availability-calendar {
+    padding: 15px;
+  }
+  
+  .calendar-day {
+    font-size: 0.8rem;
+  }
+  
+  .calendar-weekday {
+    font-size: 0.75rem;
+    padding: 5px;
+  }
+  
+  .legend-item {
+    flex-direction: column;
+    gap: 4px;
+    text-align: center;
+  }
+}
