@@ -247,12 +247,12 @@ const Navbar = () => {
 
               {/* Services */}
               <div className="nav-item">
-                <a href="#" className="nav-link">Services</a>
+                <Link to="/services" className="nav-link">Services</Link>
               </div>
 
               {/* Contact */}
               <div className="nav-item">
-                <a href="#" className="nav-link">Contact</a>
+                <Link to="/contact" className="nav-link">Contact</Link>
               </div>
             </div>
 

@@ -12,6 +12,8 @@ import ReservationPage from "./pages/ReservationPage";
 import AdminPage from "./pages/AdminPage";
 import ProfilePage from "./pages/ProfilePage";
 import MyReservationsPage from "./pages/MyReservationsPage";
+import ServicesPage from "./pages/ServicesPage";
+import ContactPage from "./pages/ContactPage";
 
 const App = () => {
   return (
@@ -26,6 +28,12 @@ const App = () => {
           <Route path="/chambre/oasis-marsupiaux" element={<OasisMarsupiauxPage />} />
           <Route path="/chambre/repos-kangourou" element={<ReposKangourouPage />} />
           <Route path="/reservation" element={<ReservationPage />} />
+          
+          {/* Page Services */}
+          <Route path="/services" element={<ServicesPage />} />
+          
+          {/* Page Contact */}
+          <Route path="/contact" element={<ContactPage />} />
           
           {/* Pages Client */}
           <Route path="/profile" element={<ProfilePage />} />
