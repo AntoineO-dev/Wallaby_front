@@ -425,19 +425,33 @@ const ContactPage = () => {
                     <div className="col-md-8">
                       <div className="google-map">
                         <iframe
-                          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2530.48217!2d2.8644093!3d50.2954076!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47dd2e50c8b5c4ad%3A0x40b82c3688c9460!2sMonchy-le-Preux%2C%2062118%20France!5e0!3m2!1sfr!2sfr!4v1694185600000!5m2!1sfr!2sfr"
+                          src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d5060.964347868665!2d2.8644093!3d50.2954076!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zNTDCsDE3JzQzLjUiTiAywrA1MSc1MS45IkU!5e0!3m2!1sfr!2sfr!4v1694000000000!5m2!1sfr!2sfr"
                           width="100%"
                           height="400"
                           style={{ border: 0, borderRadius: '15px' }}
                           allowFullScreen=""
                           loading="lazy"
                           referrerPolicy="no-referrer-when-downgrade"
-                          title="Wallaby Retreat - Monchy-le-Preux"
+                          title="Wallaby Retreat - 123 Rue de la Nature, Monchy-le-Preux"
                         ></iframe>
+                        
+                        {/* Marqueur central rouge */}
+                        <div className="map-center-marker">
+                          <div className="center-pin">
+                            <div className="pin-head">
+                              <i className="fas fa-home"></i>
+                            </div>
+                            <div className="pin-tail"></div>
+                          </div>
+                          <div className="marker-label">Wallaby Retreat</div>
+                        </div>
                         <div className="map-address-overlay">
                           <div className="address-card">
+                            <div className="location-marker">
+                              <i className="fas fa-map-marker-alt"></i>
+                            </div>
                             <h5>
-                              <i className="fas fa-map-marker-alt me-2"></i>
+                              <i className="fas fa-home me-2"></i>
                               Wallaby Retreat
                             </h5>
                             <p>123 Rue de la Nature<br/>62118 Monchy-le-Preux<br/>France</p>
