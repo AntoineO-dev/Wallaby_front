@@ -224,12 +224,12 @@ const PrairieSautillantePage = () => {
         </div>
       </section>
 
-      {/* Services inclus */}
+      {/* Services disponibles */}
       <section className="room-services">
         <div className="container-fluid">
           <div className="row">
             <div className="col-12">
-              <h2 className="section-title text-center">Services inclus</h2>
+              <h2 className="section-title text-center">Services disponibles</h2>
             </div>
           </div>
           <div className="row g-4 justify-content-center">
@@ -310,7 +310,7 @@ const PrairieSautillantePage = () => {
                 
                 <div className="booking-section">
                   <h3>Réservez votre séjour</h3>
-                  <button className="booking-btn" onClick={() => navigate('/reservation')}>
+                  <button className="booking-btn" onClick={() => navigate('/reservation?room=prairie-sautillante')}>
                     Réserver
                   </button>
                 </div>

@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import reservationService from '../services/reservationService';
 import '../../styles/ReservationPage.css';
 
 const ReservationPage = () => {
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
+  const roomParam = searchParams.get('room'); // Récupère le paramètre 'room' de l'URL
   
   // États pour le formulaire
   const [formData, setFormData] = useState({
@@ -12,7 +14,7 @@ const ReservationPage = () => {
     lastName: '',
     email: '',
     phone: '',
-    room: '',
+    room: roomParam || '', // Pré-sélectionne la chambre si fournie dans l'URL
     checkIn: '',
     checkOut: '',
     guests: 1,
@@ -24,6 +26,7 @@ const ReservationPage = () => {
   const [error, setError] = useState('');
   const [availabilityChecking, setAvailabilityChecking] = useState(false);
   const [availabilityError, setAvailabilityError] = useState('');
+  const [isRoomLocked, setIsRoomLocked] = useState(false); // Pour verrouiller la sélection de chambre
 
   // Liste des chambres disponibles
   const rooms = [
@@ -50,6 +53,20 @@ const ReservationPage = () => {
       setAvailabilityError('');
     }
   }, [formData.room, formData.checkIn, formData.checkOut]);
+
+  // Verrouiller la chambre si elle vient des paramètres d'URL
+  useEffect(() => {
+    if (roomParam) {
+      setIsRoomLocked(true);
+      // Vérifier que la chambre existe dans la liste
+      const roomExists = rooms.find(room => room.value === roomParam);
+      if (!roomExists) {
+        setError('Chambre non trouvée. Redirection vers la sélection générale.');
+        setIsRoomLocked(false);
+        setFormData(prev => ({ ...prev, room: '' }));
+      }
+    }
+  }, [roomParam]);
 
   // Fonction pour vérifier la disponibilité
   const checkAvailability = async () => {
@@ -214,8 +231,18 @@ const ReservationPage = () => {
         <div className="container-fluid">
           <div className="row">
             <div className="col-12">
-              <h1 className="page-title">Réservation</h1>
-              <p className="page-subtitle">Réservez votre séjour à La Cachette</p>
+              <h1 className="page-title">
+                {isRoomLocked && formData.room 
+                  ? `Réservation - ${rooms.find(r => r.value === formData.room)?.label}`
+                  : 'Réservation'
+                }
+              </h1>
+              <p className="page-subtitle">
+                {isRoomLocked && formData.room
+                  ? 'Finalisez votre réservation pour cette chambre'
+                  : 'Réservez votre séjour à La Cachette'
+                }
+              </p>
             </div>
           </div>
         </div>
@@ -288,22 +315,53 @@ const ReservationPage = () => {
                     <h3>Détails de la réservation</h3>
                     <div className="row g-3">
                       <div className="col-12">
-                        <label htmlFor="room" className="form-label">Chambre *</label>
-                        <select
-                          className="form-control"
-                          id="room"
-                          name="room"
-                          value={formData.room}
-                          onChange={handleInputChange}
-                          required
-                        >
-                          <option value="">Sélectionnez une chambre</option>
-                          {rooms.map(room => (
-                            <option key={room.value} value={room.value}>
-                              {room.label} - {room.price}€/nuit
-                            </option>
-                          ))}
-                        </select>
+                        <label htmlFor="room" className="form-label">
+                          Chambre * 
+                          {isRoomLocked && (
+                            <span className="text-muted"> (Pré-sélectionnée depuis la page de la chambre)</span>
+                          )}
+                        </label>
+                        {isRoomLocked ? (
+                          <div className="locked-room-display">
+                            <input
+                              type="text"
+                              className="form-control"
+                              value={rooms.find(r => r.value === formData.room)?.label + ' - ' + rooms.find(r => r.value === formData.room)?.price + '€/nuit'}
+                              disabled
+                              style={{ backgroundColor: '#f8f9fa', border: '2px solid #8b7355' }}
+                            />
+                            <input type="hidden" name="room" value={formData.room} />
+                            <small className="text-muted mt-1">
+                              Cette chambre a été sélectionnée automatiquement. 
+                              <button 
+                                type="button" 
+                                className="btn btn-link btn-sm p-0 ms-1"
+                                onClick={() => {
+                                  setIsRoomLocked(false);
+                                  setFormData(prev => ({ ...prev, room: '' }));
+                                }}
+                              >
+                                Changer de chambre
+                              </button>
+                            </small>
+                          </div>
+                        ) : (
+                          <select
+                            className="form-control"
+                            id="room"
+                            name="room"
+                            value={formData.room}
+                            onChange={handleInputChange}
+                            required
+                          >
+                            <option value="">Sélectionnez une chambre</option>
+                            {rooms.map(room => (
+                              <option key={room.value} value={room.value}>
+                                {room.label} - {room.price}€/nuit
+                              </option>
+                            ))}
+                          </select>
+                        )}
                       </div>
                       <div className="col-md-4">
                         <label htmlFor="checkIn" className="form-label">Date d'arrivée *</label>
