@@ -369,7 +369,7 @@ const ContactPage = () => {
                 <div className="address-links">
                   <div className="address-highlight">
                     <h4>
-                      <i className="fas fa-map-pin me-2"></i>
+                      <i className="fas fa-map-pin me-2 text-danger"></i>
                       123 Rue de la Nature, 62118 Monchy-le-Preux
                     </h4>
                     <div className="map-links">
