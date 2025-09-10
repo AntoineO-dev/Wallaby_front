@@ -12,6 +12,7 @@ const MyReservationsPage = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
   const [filter, setFilter] = useState('all'); // all, upcoming, past, cancelled
+  const [showNewReservationMessage, setShowNewReservationMessage] = useState(false);
 
   useEffect(() => {
     const currentUser = authService.getUser();
@@ -20,44 +21,83 @@ const MyReservationsPage = () => {
       return;
     }
     setUser(currentUser);
-    loadReservations(currentUser.id_customer);
+    loadReservations();
+
+    // Vérifier s'il y a une nouvelle réservation via l'URL
+    const urlParams = new URLSearchParams(window.location.search);
+    if (urlParams.get('new') === 'true') {
+      setShowNewReservationMessage(true);
+      // Actualiser après un délai pour laisser le temps au backend de traiter
+      setTimeout(() => {
+        loadReservations();
+      }, 1000);
+      
+      // Masquer le message après quelques secondes
+      setTimeout(() => {
+        setShowNewReservationMessage(false);
+      }, 5000);
+      
+      // Nettoyer l'URL
+      window.history.replaceState({}, document.title, window.location.pathname);
+    }
   }, [navigate]);
 
-  const loadReservations = async (customerId) => {
+  const loadReservations = async () => {
     try {
       setLoading(true);
-      // TODO: Implémenter l'appel API pour récupérer les réservations du client
-      // const response = await reservationService.getReservationsByCustomer(customerId);
+      setError('');
       
-      // Simulation de données pour l'instant
-      const mockReservations = [
-        {
-          id_reservation: 1,
-          room_name: "Le Nid du Wallaby",
-          check_in_date: "2025-10-15",
-          check_out_date: "2025-10-18",
-          total_cost: 450,
-          reservation_status: "confirme",
-          guest_count: 2
-        },
-        {
-          id_reservation: 2,
-          room_name: "La Prairie Sautillante",
-          check_in_date: "2025-08-20",
-          check_out_date: "2025-08-25",
-          total_cost: 750,
-          reservation_status: "termine",
-          guest_count: 4
-        }
-      ];
+      console.log('🔄 Début du chargement des réservations...');
       
-      setReservations(mockReservations);
+      // VÉRIFICATION UTILISATEUR CONNECTÉ
+      const currentUser = authService.getUser();
+      console.log('👤 Utilisateur connecté actuel:', currentUser);
+      console.log('👤 ID utilisateur pour filtrage:', currentUser?.id_customer || currentUser?.id || currentUser?.customer_id);
+      
+      // Récupérer les vraies réservations de l'utilisateur connecté
+      const userReservations = await reservationService.getMyReservations();
+      
+      console.log('🔍 Réservations récupérées pour l\'utilisateur:', userReservations);
+      console.log('🔍 Type de données reçues:', typeof userReservations);
+      console.log('🔍 Est-ce un tableau?', Array.isArray(userReservations));
+      
+      // VALIDATION CRITIQUE: Vérifier si ce sont vraiment les bonnes réservations
+      if (Array.isArray(userReservations) && userReservations.length > 0) {
+        console.log('🔍 VÉRIFICATION: Première réservation reçue:', userReservations[0]);
+        userReservations.forEach((reservation, index) => {
+          const resUserId = reservation.id_customer || reservation.customerId || reservation.userId || reservation.customer_id;
+          console.log(`📋 Réservation ${index + 1}: ID client = ${resUserId}, ID réservation = ${reservation.id || reservation.id_reservation}`);
+        });
+      }
+      
+      // S'assurer que c'est un tableau
+      const reservationsArray = Array.isArray(userReservations) ? userReservations : [];
+      
+      console.log('📊 Nombre final de réservations à afficher:', reservationsArray.length);
+      
+      setReservations(reservationsArray);
     } catch (err) {
-      setError('Erreur lors du chargement des réservations');
-      console.error('Erreur:', err);
+      console.error('❌ Erreur lors du chargement des réservations:', err);
+      setError('Impossible de charger vos réservations. ' + err.message);
+      setReservations([]); // S'assurer que la liste est vide en cas d'erreur
     } finally {
       setLoading(false);
     }
+  };
+
+  // Fonction pour actualiser les réservations
+  const refreshReservations = () => {
+    loadReservations();
+  };
+
+  // Fonction de debug temporaire
+  const debugUserAndReservations = () => {
+    const currentUser = authService.getUser();
+    console.log('=== DEBUG COMPLET ===');
+    console.log('Utilisateur connecté:', currentUser);
+    console.log('Token:', authService.getToken());
+    console.log('Réservations actuelles:', reservations);
+    console.log('=====================');
   };
 
   const getStatusLabel = (status) => {
@@ -135,21 +175,53 @@ const MyReservationsPage = () => {
           <div className="col-12">
             {/* En-tête */}
             <div className="reservations-header mb-4">
-              <button 
-                className="btn btn-outline-secondary mb-3"
-                onClick={() => navigate('/profile')}
-              >
-                <i className="fas fa-arrow-left me-2"></i>
-                Retour au profil
-              </button>
-              <h1 className="reservations-title">
-                <i className="fas fa-calendar-check me-3"></i>
-                Mes Réservations
-              </h1>
-              {user && (
-                <p className="text-muted">Bonjour {user.first_name}, voici l'historique de vos réservations</p>
-              )}
+              <div className="d-flex justify-content-between align-items-start">
+                <div>
+                  <button 
+                    className="btn btn-outline-secondary mb-3"
+                    onClick={() => navigate('/profile')}
+                  >
+                    <i className="fas fa-arrow-left me-2"></i>
+                    Retour au profil
+                  </button>
+                  <h1 className="reservations-title">
+                    <i className="fas fa-calendar-check me-3"></i>
+                    Mes Réservations
+                  </h1>
+                  {user && (
+                    <p className="text-muted">
+                      Bonjour {user.first_name || user.firstName || user.prenom || 'Cher client'}, 
+                      voici l'historique de vos réservations
+                    </p>
+                  )}
+                </div>
+                <div className="d-flex gap-2">
+                  <button 
+                    className="btn btn-primary"
+                    onClick={refreshReservations}
+                    disabled={loading}
+                  >
+                    <i className="fas fa-sync-alt me-2"></i>
+                    {loading ? 'Actualisation...' : 'Actualiser'}
+                  </button>
+                  <button 
+                    className="btn btn-outline-info"
+                    onClick={debugUserAndReservations}
+                  >
+                    <i className="fas fa-bug me-2"></i>
+                    Debug
+                  </button>
+                </div>
+              </div>
             </div>
+
+            {/* Message de nouvelle réservation */}
+            {showNewReservationMessage && (
+              <div className="alert alert-success mb-4">
+                <i className="fas fa-check-circle me-2"></i>
+                <strong>Réservation confirmée !</strong> Votre nouvelle réservation apparaîtra dans la liste ci-dessous une fois traitée.
+              </div>
+            )}
 
             {/* Erreur */}
             {error && (

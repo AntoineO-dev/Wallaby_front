@@ -2,7 +2,26 @@ import apiClient from './apiClient.js';
 
 // Fonction pour créer un compte
 function register(userData) {
-  return apiClient.post('auth/register', userData);
+  console.log('📤 authService.register - Données envoyées au serveur:', userData);
+  
+  // Normaliser les données avant envoi pour s'adapter aux attentes du backend
+  const normalizedData = {
+    // Essayer différents formats de noms
+    first_name: userData.firstName || userData.first_name,
+    last_name: userData.lastName || userData.last_name,
+    firstName: userData.firstName || userData.first_name,
+    lastName: userData.lastName || userData.last_name,
+    // Données de base
+    email: userData.email,
+    password: userData.password,
+    // Informations optionnelles
+    phone: userData.phone || userData.telephone,
+    role: userData.role || 'user'
+  };
+  
+  console.log('📤 Données normalisées envoyées:', normalizedData);
+  
+  return apiClient.post('auth/register', normalizedData);
 }
 
 // Fonction pour se connecter
@@ -31,7 +50,53 @@ function getToken() {
 
 // Fonction pour sauvegarder les infos utilisateur
 function saveUser(user) {
-  localStorage.setItem('user', JSON.stringify(user));
+  console.log('💾 authService.saveUser - Données reçues:', user);
+  
+  // Normaliser les données utilisateur pour s'assurer de la cohérence
+  const normalizedUser = {
+    // IDs
+    id: user.id || user.id_customer || user.customer_id,
+    id_customer: user.id_customer || user.id || user.customer_id,
+    
+    // Email
+    email: user.email,
+    
+    // Noms - supporter tous les formats possibles
+    first_name: user.first_name || user.firstName || user.prenom || user.firstname,
+    last_name: user.last_name || user.lastName || user.nom || user.lastname,
+    
+    // Contact
+    phone: user.phone || user.telephone || user.tel,
+    
+    // Rôle
+    role: user.role || 'user',
+    
+    // Dates
+    registration_date: user.registration_date || user.created_at || new Date().toISOString(),
+    
+    // Autres informations potentielles
+    address: user.address || user.adresse,
+    city: user.city || user.ville,
+    postal_code: user.postal_code || user.code_postal,
+    country: user.country || user.pays || 'France'
+  };
+  
+  console.log('💾 Données normalisées à sauvegarder:', normalizedUser);
+  console.log('🔍 Prénom final:', normalizedUser.first_name);
+  console.log('� Nom final:', normalizedUser.last_name);
+  
+  // Vérification critique
+  if (!normalizedUser.first_name || !normalizedUser.last_name) {
+    console.error('❌ ATTENTION: Prénom ou nom manquant dans les données normalisées!');
+    console.error('📊 Données originales:', user);
+  }
+  
+  localStorage.setItem('user', JSON.stringify(normalizedUser));
+  
+  // Vérification post-sauvegarde
+  const saved = localStorage.getItem('user');
+  const parsed = JSON.parse(saved);
+  console.log('✅ Vérification post-sauvegarde:', parsed);
 }
 
 // Fonction pour récupérer les infos utilisateur

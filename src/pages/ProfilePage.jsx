@@ -23,12 +23,19 @@ const ProfilePage = () => {
       navigate('/');
       return;
     }
+    console.log('👤 Données utilisateur dans ProfilePage:', currentUser);
+    console.log('📋 Clés disponibles:', Object.keys(currentUser));
+    console.log('🔍 Prénom extrait:', currentUser.first_name || currentUser.firstName || currentUser.prenom);
+    console.log('🔍 Nom extrait:', currentUser.last_name || currentUser.lastName || currentUser.nom);
+    
     setUser(currentUser);
+    
+    // Normaliser les données en utilisant la même logique que authService
     setFormData({
-      first_name: currentUser.first_name || '',
-      last_name: currentUser.last_name || '',
+      first_name: currentUser.first_name || currentUser.firstName || currentUser.prenom || '',
+      last_name: currentUser.last_name || currentUser.lastName || currentUser.nom || '',
       email: currentUser.email || '',
-      phone: currentUser.phone || ''
+      phone: currentUser.phone || currentUser.telephone || ''
     });
   }, [navigate]);
 
@@ -92,6 +99,19 @@ const ProfilePage = () => {
       <div className="container py-5">
         <div className="row justify-content-center">
           <div className="col-lg-8">
+            {/* Message de bienvenue personnalisé */}
+            <div className="welcome-banner mb-4">
+              <div className="welcome-content">
+                <h2 className="welcome-message">
+                  <i className="fas fa-hand-wave me-2"></i>
+                  Bonjour {(user?.first_name || user?.firstName || user?.prenom) || 'cher client'} !
+                </h2>
+                <p className="welcome-subtitle">
+                  Bienvenue dans votre espace personnel. Gérez votre profil et vos réservations en toute simplicité.
+                </p>
+              </div>
+            </div>
+
             {/* En-tête */}
             <div className="profile-header mb-4">
               <button 
@@ -170,7 +190,9 @@ const ProfilePage = () => {
                         onChange={handleInputChange}
                       />
                     ) : (
-                      <div className="profile-info">{user.first_name || 'Non renseigné'}</div>
+                      <div className="profile-info">
+                        {(user?.first_name || user?.firstName || user?.prenom) || 'Non renseigné'}
+                      </div>
                     )}
                   </div>
 
@@ -188,7 +210,9 @@ const ProfilePage = () => {
                         onChange={handleInputChange}
                       />
                     ) : (
-                      <div className="profile-info">{user.last_name || 'Non renseigné'}</div>
+                      <div className="profile-info">
+                        {(user?.last_name || user?.lastName || user?.nom) || 'Non renseigné'}
+                      </div>
                     )}
                   </div>
 
@@ -225,7 +249,9 @@ const ProfilePage = () => {
                         placeholder="Ex: 06 12 34 56 78"
                       />
                     ) : (
-                      <div className="profile-info">{user.phone || 'Non renseigné'}</div>
+                      <div className="profile-info">
+                        {(user?.phone || user?.telephone) || 'Non renseigné'}
+                      </div>
                     )}
                   </div>
 

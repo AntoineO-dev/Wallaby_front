@@ -17,7 +17,7 @@ const AdminPage = () => {
   // États pour les filtres
   const [statusFilter, setStatusFilter] = useState('all');
   const [searchTerm, setSearchTerm] = useState('');
-  const [sortBy, setSortBy] = useState('newest');
+  const [sortBy, setSortBy] = useState('reservation_newest');
   
   // États pour les actions
   const [actionLoading, setActionLoading] = useState(null);
@@ -63,11 +63,20 @@ const AdminPage = () => {
 
     // Filtrer par terme de recherche
     if (searchTerm) {
-      filtered = filtered.filter(res => 
-        res.id_reservation?.toString().includes(searchTerm) ||
-        res.id_room?.toString().includes(searchTerm) ||
-        res.id_customer?.toString().includes(searchTerm)
-      );
+      filtered = filtered.filter(res => {
+        const customer = res.customer || res.client || res;
+        const customerName = formatCustomerName(res).toLowerCase();
+        const roomName = formatRoomName(res).toLowerCase();
+        
+        return (
+          res.id_reservation?.toString().includes(searchTerm) ||
+          res.id_room?.toString().includes(searchTerm) ||
+          res.id_customer?.toString().includes(searchTerm) ||
+          customerName.includes(searchTerm.toLowerCase()) ||
+          roomName.includes(searchTerm.toLowerCase()) ||
+          customer.email?.toLowerCase().includes(searchTerm.toLowerCase())
+        );
+      });
     }
 
     // Trier
@@ -84,12 +93,102 @@ const AdminPage = () => {
       case 'price_low':
         filtered.sort((a, b) => (a.total_cost || 0) - (b.total_cost || 0));
         break;
+      case 'reservation_newest':
+        // Tri par date de création de la réservation (plus récent en premier)
+        filtered.sort((a, b) => {
+          const dateA = new Date(a.created_at || a.reservation_date || a.booking_date || a.updated_at);
+          const dateB = new Date(b.created_at || b.reservation_date || b.booking_date || b.updated_at);
+          console.log(`🔍 Tri reservation_newest - ID ${a.id || a.id_reservation}: ${dateA}, ID ${b.id || b.id_reservation}: ${dateB}`);
+          return dateB - dateA;
+        });
+        break;
+      case 'reservation_oldest':
+        // Tri par date de création de la réservation (plus ancien en premier)
+        filtered.sort((a, b) => {
+          const dateA = new Date(a.created_at || a.reservation_date || a.booking_date || a.updated_at);
+          const dateB = new Date(b.created_at || b.reservation_date || b.booking_date || b.updated_at);
+          return dateA - dateB;
+        });
+        break;
       default:
+        // Tri par défaut : par date de création de la réservation (plus récent en premier)
+        filtered.sort((a, b) => {
+          const dateA = new Date(a.created_at || a.reservation_date || a.booking_date || a.updated_at || a.check_in_date);
+          const dateB = new Date(b.created_at || b.reservation_date || b.booking_date || b.updated_at || b.check_in_date);
+          console.log(`🔍 Tri par défaut - ID ${a.id || a.id_reservation}: ${dateA}, ID ${b.id || b.id_reservation}: ${dateB}`);
+          return dateB - dateA;
+        });
         break;
     }
 
     setFilteredReservations(filtered);
   }, [reservations, statusFilter, searchTerm, sortBy]);
+
+  // Fonction pour formater le nom du client
+  const formatCustomerName = (reservation) => {
+    // Essayer de récupérer les informations client de différentes façons
+    const customer = reservation.customer || reservation.client || reservation;
+    
+    // Si on a les noms séparés
+    if (customer.first_name && customer.last_name) {
+      return `${customer.first_name} ${customer.last_name}`;
+    }
+    
+    // Si on a un nom complet
+    if (customer.name || customer.full_name || customer.customer_name) {
+      return customer.name || customer.full_name || customer.customer_name;
+    }
+    
+    // Si on a prénom ET nom dans des champs alternatifs
+    if (customer.prenom && customer.nom) {
+      return `${customer.prenom} ${customer.nom}`;
+    }
+    
+    // Si on a firstName ET lastName
+    if (customer.firstName && customer.lastName) {
+      return `${customer.firstName} ${customer.lastName}`;
+    }
+    
+    // Si on a l'email, l'utiliser comme identifiant
+    if (customer.email) {
+      return customer.email;
+    }
+    
+    // Fallback : afficher l'ID
+    return `Client ${reservation.id_customer || reservation.customer_id || 'inconnu'}`;
+  };
+
+  // Fonction pour formater le nom de la chambre
+  const formatRoomName = (reservation) => {
+    // Essayer de récupérer les informations de la chambre de différentes façons
+    const room = reservation.room || reservation.chambre || reservation;
+    
+    // Si on a le nom de la chambre
+    if (room.name || room.room_name || room.nom || room.title) {
+      return room.name || room.room_name || room.nom || room.title;
+    }
+    
+    // Si on a un type de chambre
+    if (room.type || room.room_type || room.category) {
+      return room.type || room.room_type || room.category;
+    }
+    
+    // Mapping manuel des IDs vers les noms (basé sur votre structure de données)
+    const roomNames = {
+      1: 'Le Nid du Wallaby',
+      2: 'La Prairie Sautillante', 
+      3: "L'Oasis des Marsupiaux",
+      4: 'Le Repos du Kangourou'
+    };
+    
+    const roomId = reservation.id_room || reservation.room_id;
+    if (roomNames[roomId]) {
+      return roomNames[roomId];
+    }
+    
+    // Fallback : afficher l'ID
+    return `Chambre ${roomId || 'inconnue'}`;
+  };
 
   // Charger toutes les données
   const loadData = async () => {
@@ -361,8 +460,10 @@ const AdminPage = () => {
                 value={sortBy}
                 onChange={(e) => setSortBy(e.target.value)}
               >
-                <option value="newest">Plus récent</option>
-                <option value="oldest">Plus ancien</option>
+                <option value="reservation_newest">Date de réservation (récent)</option>
+                <option value="reservation_oldest">Date de réservation (ancien)</option>
+                <option value="newest">Date d'arrivée (récent)</option>
+                <option value="oldest">Date d'arrivée (ancien)</option>
                 <option value="price_high">Prix décroissant</option>
                 <option value="price_low">Prix croissant</option>
               </select>
@@ -413,11 +514,11 @@ const AdminPage = () => {
                       </td>
                       <td>
                         <i className="fas fa-bed me-1"></i>
-                        Chambre {reservation.id_room}
+                        {formatRoomName(reservation)}
                       </td>
                       <td>
                         <i className="fas fa-user me-1"></i>
-                        Client {reservation.id_customer}
+                        {formatCustomerName(reservation)}
                       </td>
                       <td>{formatDate(reservation.check_in_date)}</td>
                       <td>{formatDate(reservation.check_out_date)}</td>
@@ -504,10 +605,6 @@ const AdminPage = () => {
                       Du {formatDate(selectedReservation.check_in_date)} au {formatDate(selectedReservation.check_out_date)}<br/>
                       Prix : {formatPrice(selectedReservation.total_cost)}
                     </div>
-                    <p className="text-danger">
-                      <i className="fas fa-exclamation-triangle me-1"></i>
-                      Cette action ne peut pas être annulée.
-                    </p>
                   </div>
                 ) : (
                   <p>Confirmer cette action ?</p>

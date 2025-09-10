@@ -129,12 +129,50 @@ const Navbar = () => {
       if (isLogin) {
         // Connexion
         const response = await authService.login(authForm.email, authForm.password);
-        authService.saveToken(response.data.token);
-        authService.saveUser(response.data.user);
-        setUser(response.data.user);
+        console.log('📥 Réponse de connexion:', response);
+        
+        if (response.data?.token) {
+          authService.saveToken(response.data.token);
+        }
+        
+        // Sauvegarder les données utilisateur - vérifier plusieurs formats possibles
+        let userToSave = null;
+        if (response.data?.user) {
+          userToSave = response.data.user;
+        } else if (response.data?.customer) {
+          userToSave = response.data.customer;
+        } else if (response.data?.data?.user) {
+          userToSave = response.data.data.user;
+        } else if (response.data?.data?.customer) {
+          userToSave = response.data.data.customer;
+        }
+        
+        if (userToSave) {
+          console.log('👤 Sauvegarde des données utilisateur à la connexion:', userToSave);
+          authService.saveUser(userToSave);
+          setUser(userToSave);
+        }
+        
         handleAuthModalToggle(); // Fermer la modal
       } else {
         // Inscription
+        
+        // Validation des champs obligatoires
+        if (!authForm.firstName.trim()) {
+          setAuthError('Le prénom est obligatoire');
+          setAuthLoading(false);
+          return;
+        }
+        if (!authForm.lastName.trim()) {
+          setAuthError('Le nom est obligatoire');
+          setAuthLoading(false);
+          return;
+        }
+        if (!authForm.email.trim()) {
+          setAuthError('L\'email est obligatoire');
+          setAuthLoading(false);
+          return;
+        }
         if (authForm.password !== authForm.confirmPassword) {
           setAuthError('Les mots de passe ne correspondent pas');
           setAuthLoading(false);
@@ -153,12 +191,81 @@ const Navbar = () => {
           password: authForm.password
         };
         
-        // Inscription réussie - NE PAS connecter automatiquement
-        await authService.register(userData);
+        console.log('📝 Données envoyées pour inscription:', userData);
+        
+        // Inscription
+        const response = await authService.register(userData);
+        
+        console.log('📥 Réponse d\'inscription complète:', response);
+        console.log('📊 Structure de response.data:', response.data);
+        
+        // Sauvegarder le token si présent (connexion automatique)
+        if (response.data?.token) {
+          console.log('🔑 Token reçu à l\'inscription, connexion automatique');
+          authService.saveToken(response.data.token);
+        }
+        
+        // Sauvegarder les données utilisateur - vérifier plusieurs formats possibles
+        let userToSave = null;
+        if (response.data?.user) {
+          console.log('✅ Données utilisateur trouvées dans response.data.user');
+          userToSave = response.data.user;
+        } else if (response.data?.customer) {
+          console.log('✅ Données utilisateur trouvées dans response.data.customer');
+          userToSave = response.data.customer;
+        } else if (response.data?.data?.user) {
+          console.log('✅ Données utilisateur trouvées dans response.data.data.user');
+          userToSave = response.data.data.user;
+        } else if (response.data?.data?.customer) {
+          console.log('✅ Données utilisateur trouvées dans response.data.data.customer');
+          userToSave = response.data.data.customer;
+        } else {
+          // Si aucune donnée utilisateur dans la réponse, créer à partir des données du formulaire
+          console.log('⚠️ Aucune donnée utilisateur dans la réponse serveur');
+          console.log('🔧 Création des données utilisateur à partir du formulaire');
+          userToSave = {
+            email: userData.email,
+            first_name: userData.firstName,
+            last_name: userData.lastName,
+            firstName: userData.firstName, // Backup
+            lastName: userData.lastName,   // Backup
+            role: 'user',
+            registration_date: new Date().toISOString()
+          };
+        }
+        
+        // IMPORTANT: Toujours s'assurer que les noms sont présents
+        if (userToSave && (!userToSave.first_name || !userToSave.last_name)) {
+          console.log('� Complément des données manquantes depuis le formulaire');
+          userToSave = {
+            ...userToSave,
+            first_name: userToSave.first_name || userData.firstName,
+            last_name: userToSave.last_name || userData.lastName,
+            firstName: userToSave.firstName || userData.firstName,
+            lastName: userToSave.lastName || userData.lastName
+          };
+        }
+        
+        if (userToSave) {
+          console.log('👤 Données utilisateur finales à sauvegarder:', userToSave);
+          authService.saveUser(userToSave);
+          
+          // Si connexion automatique (token présent), mettre à jour l'état
+          if (response.data?.token) {
+            setUser(userToSave);
+          }
+        } else {
+          console.error('❌ Impossible de créer les données utilisateur');
+        }
         
         // Afficher message de succès et passer en mode connexion
-        setAuthSuccess('Inscription réussie ! Vous pouvez maintenant vous connecter.');
-        setIsLogin(true); // Passer en mode connexion
+        if (response.data?.token) {
+          setAuthSuccess('Inscription réussie ! Vous êtes maintenant connecté.');
+          handleAuthModalToggle(); // Fermer la modal si connexion automatique
+        } else {
+          setAuthSuccess('Inscription réussie ! Vous pouvez maintenant vous connecter.');
+          setIsLogin(true); // Passer en mode connexion
+        }
         
         // Réinitialiser le formulaire mais garder l'email
         setAuthForm({

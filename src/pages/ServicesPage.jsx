@@ -171,7 +171,7 @@ const ServicesPage = () => {
             <div className="row justify-content-center align-items-center h-100">
               <div className="col-lg-8 text-center">
                 <h1 className="hero-title">
-                  <i className="fas fa-concierge-bell me-3"></i>
+                  <i className="fas fa-star me-3"></i>
                   Nos Services Premium
                 </h1>
                 <p className="hero-subtitle">
@@ -325,16 +325,19 @@ const ServicesPage = () => {
             <div className="row align-items-center">
               <div className="col-lg-8">
                 <h3 className="cta-title">
-                  <i className="fas fa-concierge-bell me-2"></i>
-                  Service Conciergerie 24h/24
+                  <i className="fas fa-calendar-check me-2"></i>
+                  Prêt à Réserver ?
                 </h3>
                 <p className="cta-description">
-                  Notre équipe dédiée est à votre disposition pour organiser tous ces services 
-                  et bien plus encore. Contactez-nous pour personnaliser votre séjour selon vos envies.
+                  Découvrez tous ces services exceptionnels lors de votre séjour. 
+                  Réservez dès maintenant pour vivre une expérience inoubliable.
                 </p>
               </div>
               <div className="col-lg-4 text-lg-end text-center">
-                <button className="btn btn-outline-primary btn-lg me-3 mb-2">
+                <button 
+                  className="btn btn-outline-primary btn-lg me-3 mb-2"
+                  onClick={() => navigate('/contact')}
+                >
                   <i className="fas fa-phone me-2"></i>
                   Nous Contacter
                 </button>

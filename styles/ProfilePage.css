@@ -5,6 +5,47 @@
   padding-top: 2rem;
 }
 
+/* Bannière de bienvenue */
+.welcome-banner {
+  background: linear-gradient(135deg, #8b7355 0%, #6d5940 100%);
+  border-radius: 15px;
+  padding: 2rem;
+  text-align: center;
+  color: white;
+  box-shadow: 0 8px 25px rgba(139, 115, 85, 0.3);
+  margin-bottom: 2rem;
+}
+
+.welcome-content {
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.welcome-message {
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+  color: white;
+}
+
+.welcome-message i.fa-hand-wave {
+  color: #ffd700;
+  animation: wave 2s ease-in-out infinite;
+}
+
+@keyframes wave {
+  0%, 100% { transform: rotate(0deg); }
+  25% { transform: rotate(20deg); }
+  75% { transform: rotate(-20deg); }
+}
+
+.welcome-subtitle {
+  font-size: 1.1rem;
+  opacity: 0.9;
+  margin-bottom: 0;
+  line-height: 1.5;
+}
+
 .profile-header {
   text-align: center;
 }

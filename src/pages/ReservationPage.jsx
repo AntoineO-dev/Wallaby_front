@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import reservationService from '../services/reservationService';
+import authService from '../services/authService';
 import '../../styles/ReservationPage.css';
 
 const ReservationPage = () => {
@@ -44,6 +45,29 @@ const ReservationPage = () => {
       [name]: value
     }));
   };
+
+  // Vérifier l'utilisateur connecté et pré-remplir ses données
+  useEffect(() => {
+    const currentUser = authService.getUser();
+    if (!currentUser) {
+      // Rediriger vers la page d'accueil si l'utilisateur n'est pas connecté
+      setError('Vous devez être connecté pour faire une réservation.');
+      setTimeout(() => {
+        navigate('/');
+      }, 2000);
+      return;
+    }
+
+    // Pré-remplir les données de l'utilisateur connecté
+    console.log('👤 Utilisateur connecté:', currentUser);
+    setFormData(prev => ({
+      ...prev,
+      firstName: currentUser.first_name || currentUser.firstName || currentUser.prenom || '',
+      lastName: currentUser.last_name || currentUser.lastName || currentUser.nom || '',
+      email: currentUser.email || '',
+      phone: currentUser.phone || currentUser.telephone || ''
+    }));
+  }, [navigate]);
 
   // Vérification automatique de disponibilité quand les dates ou la chambre changent
   useEffect(() => {
@@ -140,6 +164,14 @@ const ReservationPage = () => {
     setLoading(true);
     setError('');
 
+    // Définir le mapping des chambres
+    const roomIdMap = {
+      'nid-wallaby': 1,
+      'prairie-sautillante': 2,
+      'oasis-marsupiaux': 3,
+      'repos-kangourou': 4
+    };
+
     // Validation basique
     if (!formData.firstName || !formData.lastName || !formData.email || 
         !formData.room || !formData.checkIn || !formData.checkOut) {
@@ -161,34 +193,49 @@ const ReservationPage = () => {
       return;
     }
 
-    try {
-      // Convertir la valeur de la chambre en ID numérique
-      const roomIdMap = {
-        'nid-wallaby': 1,
-        'prairie-sautillante': 2,
-        'oasis-marsupiaux': 3,
-        'repos-kangourou': 4
-      };
+    // Vérifier que la chambre sélectionnée existe
+    if (!roomIdMap[formData.room]) {
+      setError('Chambre sélectionnée invalide. Veuillez choisir une autre chambre.');
+      setLoading(false);
+      return;
+    }
 
+    try {
       const reservationData = {
-        ...formData,
+        firstName: formData.firstName,
+        lastName: formData.lastName,
+        email: formData.email,
+        phone: formData.phone,
         roomId: roomIdMap[formData.room],
+        checkIn: formData.checkIn,
+        checkOut: formData.checkOut,
+        guests: parseInt(formData.guests) || 1,
+        message: formData.message,
         totalPrice: calculateTotal()
       };
+
+      console.log('📋 Données de réservation:', reservationData);
 
       // Envoyer la réservation au backend
       const result = await reservationService.createReservation(reservationData);
       
-      setSuccess(true);
-      console.log('Réservation créée avec succès:', result);
+      console.log('✅ Réservation créée avec succès:', result);
       
-      // Redirection après succès
-      setTimeout(() => {
-        navigate('/');
-      }, 3000);
+      // Vérifier que le résultat est valide
+      if (result) {
+        setSuccess(true);
+        
+        // Redirection vers les réservations du client après succès
+        setTimeout(() => {
+          navigate('/my-reservations?new=true');
+        }, 3000);
+      } else {
+        throw new Error('Réponse du serveur invalide');
+      }
       
     } catch (err) {
-      setError(err.message);
+      console.error('❌ Erreur dans handleSubmit:', err);
+      setError(err.message || 'Une erreur est survenue lors de la réservation');
     } finally {
       setLoading(false);
     }
@@ -215,7 +262,23 @@ const ReservationPage = () => {
                   <p><strong>Nombre de nuits :</strong> {calculateNights()}</p>
                   <p><strong>Total estimé :</strong> {calculateTotal()}€</p>
                 </div>
-                <p className="redirect-info">Vous allez être redirigé vers l'accueil dans quelques secondes...</p>
+                <div className="action-buttons">
+                  <button 
+                    className="btn btn-primary me-3"
+                    onClick={() => navigate('/my-reservations?new=true')}
+                  >
+                    Voir mes réservations
+                  </button>
+                  <button 
+                    className="btn btn-outline-secondary"
+                    onClick={() => navigate('/')}
+                  >
+                    Retour à l'accueil
+                  </button>
+                </div>
+                <p className="redirect-info">
+                  Redirection automatique vers vos réservations dans quelques secondes...
+                </p>
               </div>
             </div>
           </div>
